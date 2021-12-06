@@ -1,17 +1,21 @@
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { Container } from "react-bootstrap";
+import LoginScreen from "./screens/LoginScreen";
+import DashboardScreen from "./screens/DashboardScreen";
 function App() {
   return (
-    <>
+    <Router>
       <Header />
       <main className="py-3">
         <Container>
-          <h1>Admin</h1>
+          <Route path="/" component={LoginScreen} exact />
+          <Route path="/dashboard" component={DashboardScreen} />
         </Container>
       </main>
       <Footer />
-    </>
+    </Router>
   );
 }
 
