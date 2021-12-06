@@ -10,8 +10,8 @@ function App() {
       <Header />
       <main className="py-3">
         <Container>
-          <Route path="/" component={LoginScreen} exact />
           <Route path="/dashboard" component={DashboardScreen} />
+          <Route path="/" component={LoginScreen} exact />
         </Container>
       </main>
       <Footer />
