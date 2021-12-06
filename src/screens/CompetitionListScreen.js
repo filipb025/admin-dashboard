@@ -27,7 +27,7 @@ const CompetitionListScreen = ({ history }) => {
     } else {
       history.push("/");
     }
-  }, [dispatch, history, successDelete]);
+  }, [dispatch, history, successDelete, userInfo]);
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure?")) {
