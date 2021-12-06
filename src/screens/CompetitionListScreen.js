@@ -4,7 +4,10 @@ import { Table, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { listCompetitions } from "../actions/competitionActions";
+import {
+  listCompetitions,
+  deleteCompetition,
+} from "../actions/competitionActions";
 
 const CompetitionListScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -15,16 +18,21 @@ const CompetitionListScreen = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const competitionDelete = useSelector((state) => state.competitionDelete);
+  const { success: successDelete } = competitionDelete;
+
   useEffect(() => {
     if (userInfo) {
       dispatch(listCompetitions());
     } else {
       history.push("/");
     }
-  }, [dispatch, history]);
+  }, [dispatch, history, successDelete]);
 
   const deleteHandler = (id) => {
-    console.log("delete");
+    if (window.confirm("Are you sure?")) {
+      dispatch(deleteCompetition(id));
+    }
   };
 
   return (
