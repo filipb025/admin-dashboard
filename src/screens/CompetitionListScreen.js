@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -9,7 +9,7 @@ import {
   deleteCompetition,
 } from "../actions/competitionActions";
 
-const CompetitionListScreen = ({ history }) => {
+const CompetitionListScreen = ({ history, match }) => {
   const dispatch = useDispatch();
 
   const competitionList = useSelector((state) => state.competitionList);
@@ -19,7 +19,11 @@ const CompetitionListScreen = ({ history }) => {
   const { userInfo } = userLogin;
 
   const competitionDelete = useSelector((state) => state.competitionDelete);
-  const { success: successDelete } = competitionDelete;
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = competitionDelete;
 
   useEffect(() => {
     if (userInfo) {
@@ -35,9 +39,23 @@ const CompetitionListScreen = ({ history }) => {
     }
   };
 
+  const createCompetitionHandler = (competition) => {
+    console.log("createCompetitionHandler");
+  };
+
   return (
     <>
-      <h1>Competitions</h1>
+      <Row className="align-items-center">
+        <Col className="text-right">
+          <h1>Competitions</h1>
+          <Button className="my-3" onClick={createCompetitionHandler}>
+            <i className="fas fa-plus"></i> Create Competition
+          </Button>
+        </Col>
+      </Row>
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+
       {loading ? (
         <Loader />
       ) : error ? (

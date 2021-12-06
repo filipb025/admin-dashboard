@@ -57,7 +57,7 @@ export const deleteCompetition = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.delete(`/api/competition/${id}`, config);
+    await axios.delete(`/api/competition/${id}`, config);
 
     dispatch({
       type: COMPETITION_DELETE_SUCCESS,
