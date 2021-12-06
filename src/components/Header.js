@@ -27,6 +27,9 @@ const Header = () => {
               <LinkContainer to="/dashboard">
                 <Nav.Link>Dashboard</Nav.Link>
               </LinkContainer>
+              <LinkContainer to="/competitions">
+                <Nav.Link>Competitions</Nav.Link>
+              </LinkContainer>
               {userInfo ? (
                 <NavDropdown title="Admin" id="username">
                   <LinkContainer to="/profile">

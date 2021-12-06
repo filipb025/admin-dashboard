@@ -6,11 +6,13 @@ import {
   userDetailsReducer,
   userUpdateProfileReducer,
 } from "./reducers/userReducers";
+import { competitionListReducer } from "./reducers/competitionReducer";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  competitionList: competitionListReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
