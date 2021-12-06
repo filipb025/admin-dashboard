@@ -6,14 +6,22 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { listCompetitions } from "../actions/competitionActions";
 
-const CompetitionListScreen = () => {
+const CompetitionListScreen = ({ history }) => {
   const dispatch = useDispatch();
+
   const competitionList = useSelector((state) => state.competitionList);
   const { loading, error, competitions } = competitionList;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   useEffect(() => {
-    dispatch(listCompetitions());
-  }, [dispatch]);
+    if (userInfo) {
+      dispatch(listCompetitions());
+    } else {
+      history.push("/");
+    }
+  }, [dispatch, history]);
 
   const deleteHandler = (id) => {
     console.log("delete");

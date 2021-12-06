@@ -2,6 +2,7 @@ import {
   COMPETITION_LIST_FAIL,
   COMPETITION_LIST_REQUEST,
   COMPETITION_LIST_SUCCESS,
+  COMPETITION_LIST_RESET,
 } from "../constants/competitionConstants";
 
 export const competitionListReducer = (
@@ -15,6 +16,8 @@ export const competitionListReducer = (
       return { loading: false, competitions: action.payload };
     case COMPETITION_LIST_FAIL:
       return { loading: false, error: action.payload };
+    case COMPETITION_LIST_RESET:
+      return { competitions: [] };
     default:
       return state;
   }

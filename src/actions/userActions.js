@@ -13,6 +13,7 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
 } from "../constants/userConstants";
+import { COMPETITION_LIST_RESET } from "../constants/competitionConstants";
 import axios from "axios";
 
 export const login = (email, password) => async (dispatch) => {
@@ -50,6 +51,7 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
+  dispatch({ type: COMPETITION_LIST_RESET });
 };
 
 export const getUserDetails = (id) => async (dispatch, getState) => {
