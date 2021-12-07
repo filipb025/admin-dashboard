@@ -93,14 +93,24 @@ const CompetitionListScreen = ({ history, match }) => {
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <Table striped bordered hover responsive className="table-sm">
+        <Table
+          striped
+          bordered
+          hover
+          responsive
+          className="table-sm text-center"
+        >
           <thead>
             <tr>
               <th>ID</th>
               <th>Name</th>
-              <th>Description</th>
               <th>Start Date</th>
               <th>End Date</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+              <th>User</th>
+              <th>Type</th>
+              <th>Private</th>
               <th></th>
             </tr>
           </thead>
@@ -109,9 +119,14 @@ const CompetitionListScreen = ({ history, match }) => {
               <tr key={competition.id}>
                 <td>{competition.id}</td>
                 <td>{competition.name}</td>
-                <td>{competition.description}</td>
                 <td>{competition.start_date}</td>
                 <td>{competition.end_date}</td>
+
+                <td>{competition.created_at}</td>
+                <td>{competition.updated_at}</td>
+                <td>{competition.user}</td>
+                <td>{competition.type}</td>
+                <td>{competition.private}</td>
 
                 <td>
                   <LinkContainer to={`/competitions/${competition.id}/edit`}>

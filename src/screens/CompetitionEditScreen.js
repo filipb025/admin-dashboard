@@ -74,7 +74,7 @@ const CompetitionEditScreen = ({ match, history }) => {
         Go Back
       </Link>
       <FormContainer>
-        <h1>Edid Competition</h1>
+        <h1>Edit Competition</h1>
         {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
@@ -95,13 +95,14 @@ const CompetitionEditScreen = ({ match, history }) => {
             <Form.Group controlId="description">
               <Form.Label>Description</Form.Label>
               <Form.Control
-                type="text"
+                type="description"
                 placeholder="Enter description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               ></Form.Control>
             </Form.Group>
-            <Button type="submit" variant="primary">
+
+            <Button className="my-3" type="submit" variant="primary">
               Update
             </Button>
           </Form>
