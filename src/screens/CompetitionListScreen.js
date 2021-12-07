@@ -7,7 +7,9 @@ import Loader from "../components/Loader";
 import {
   listCompetitions,
   deleteCompetition,
+  createCompetition,
 } from "../actions/competitionActions";
+import { COMPETITION_CREATE_RESET } from "../constants/competitionConstants";
 
 const CompetitionListScreen = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -25,13 +27,40 @@ const CompetitionListScreen = ({ history, match }) => {
     success: successDelete,
   } = competitionDelete;
 
+  const competitionCreate = useSelector((state) => state.competitionCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    competition: createdCompetition,
+  } = competitionCreate;
+
   useEffect(() => {
-    if (userInfo) {
-      dispatch(listCompetitions());
-    } else {
+    dispatch({ type: COMPETITION_CREATE_RESET });
+
+    // if (userInfo) {
+    //   dispatch(listCompetitions());
+    // } else {
+    //   history.push("/");
+    // }
+
+    if (!userInfo) {
       history.push("/");
     }
-  }, [dispatch, history, successDelete, userInfo]);
+
+    if (successCreate) {
+      history.push(`/competition/${createdCompetition.id}/edit`);
+    } else {
+      dispatch(listCompetitions());
+    }
+  }, [
+    dispatch,
+    history,
+    successDelete,
+    successCreate,
+    createdCompetition,
+    userInfo,
+  ]);
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure?")) {
@@ -39,8 +68,8 @@ const CompetitionListScreen = ({ history, match }) => {
     }
   };
 
-  const createCompetitionHandler = (competition) => {
-    console.log("createCompetitionHandler");
+  const createCompetitionHandler = () => {
+    dispatch(createCompetition());
   };
 
   return (
@@ -55,6 +84,9 @@ const CompetitionListScreen = ({ history, match }) => {
       </Row>
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
 
       {loading ? (
         <Loader />

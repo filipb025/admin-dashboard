@@ -9,14 +9,18 @@ import {
 import {
   competitionListReducer,
   competitionDeleteReducer,
+  competitionCreateReducer,
+  competitionDetailsReducer,
 } from "./reducers/competitionReducer";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  competitionDetails: competitionDetailsReducer,
   competitionList: competitionListReducer,
   competitionDelete: competitionDeleteReducer,
+  competitionCreate: competitionCreateReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

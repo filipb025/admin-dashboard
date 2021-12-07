@@ -14,10 +14,10 @@ function App() {
       <Header />
       <main className="py-3">
         <Container>
-          {/* <Route
+          <Route
             path="/competition/:id/edit"
             component={CompetitionEditScreen}
-          /> */}
+          />
           <Route path="/competitions" component={CompetitionListScreen} />
           <Route path="/dashboard" component={DashboardScreen} />
           <Route path="/profile" component={ProfileScreen} exact />

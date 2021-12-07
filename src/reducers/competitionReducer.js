@@ -6,6 +6,13 @@ import {
   COMPETITION_DELETE_REQUEST,
   COMPETITION_DELETE_SUCCESS,
   COMPETITION_DELETE_FAIL,
+  COMPETITION_CREATE_REQUEST,
+  COMPETITION_CREATE_SUCCESS,
+  COMPETITION_CREATE_FAIL,
+  COMPETITION_CREATE_RESET,
+  COMPETITION_DETAILS_REQUEST,
+  COMPETITION_DETAILS_SUCCESS,
+  COMPETITION_DETAILS_FAIL,
 } from "../constants/competitionConstants";
 
 export const competitionListReducer = (
@@ -26,6 +33,22 @@ export const competitionListReducer = (
   }
 };
 
+export const competitionDetailsReducer = (
+  state = { competition: {} },
+  action
+) => {
+  switch (action.type) {
+    case COMPETITION_DETAILS_REQUEST:
+      return { loading: true, ...state };
+    case COMPETITION_DETAILS_SUCCESS:
+      return { loading: false, product: action.payload };
+    case COMPETITION_DETAILS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 export const competitionDeleteReducer = (state = {}, action) => {
   switch (action.type) {
     case COMPETITION_DELETE_REQUEST:
@@ -35,6 +58,21 @@ export const competitionDeleteReducer = (state = {}, action) => {
     case COMPETITION_DELETE_FAIL:
       return { loading: false, error: action.payload };
 
+    default:
+      return state;
+  }
+};
+
+export const competitionCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case COMPETITION_CREATE_REQUEST:
+      return { loading: true };
+    case COMPETITION_CREATE_SUCCESS:
+      return { loading: false, success: true, competition: action.payload };
+    case COMPETITION_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    case COMPETITION_CREATE_RESET:
+      return {};
     default:
       return state;
   }
