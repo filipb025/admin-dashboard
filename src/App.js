@@ -15,7 +15,7 @@ function App() {
       <main className="py-3">
         <Container>
           <Route
-            path="/competition/:id/edit"
+            path="/competitions/:id/edit"
             component={CompetitionEditScreen}
           />
           <Route path="/competitions" component={CompetitionListScreen} />

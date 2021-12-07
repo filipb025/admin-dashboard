@@ -18,7 +18,7 @@ const CompetitionEditScreen = ({ match, history }) => {
   const { loading, error, competition } = competitionDetails;
 
   useEffect(() => {
-    if (!competition.name || competition.id !== competitionId) {
+    if (competition.id !== competitionId) {
       dispatch(listCompetitionDetails(competitionId));
     } else {
       setName(competition.name);
@@ -36,7 +36,6 @@ const CompetitionEditScreen = ({ match, history }) => {
       <Link to="/competitions" className="btn btn-light my-3">
         Go Back
       </Link>
-
       <Row>
         <Col md={4}>SIDEMENU</Col>
         <Col md={8}>

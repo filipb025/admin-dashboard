@@ -48,11 +48,21 @@ export const listCompetitions = () => async (dispatch, getState) => {
   }
 };
 
-export const listCompetitionDetails = (id) => async (dispatch) => {
+export const listCompetitionDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: COMPETITION_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`/api/competition/${id}`);
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.auth.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/competition/${id}`, config);
 
     dispatch({
       type: COMPETITION_DETAILS_SUCCESS,

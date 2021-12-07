@@ -41,7 +41,7 @@ export const competitionDetailsReducer = (
     case COMPETITION_DETAILS_REQUEST:
       return { loading: true, ...state };
     case COMPETITION_DETAILS_SUCCESS:
-      return { loading: false, product: action.payload };
+      return { loading: false, competition: action.payload };
     case COMPETITION_DETAILS_FAIL:
       return { loading: false, error: action.payload };
     default:

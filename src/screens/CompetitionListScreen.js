@@ -49,7 +49,7 @@ const CompetitionListScreen = ({ history, match }) => {
     }
 
     if (successCreate) {
-      history.push(`/competition/${createdCompetition.id}/edit`);
+      history.push(`/competitions/${createdCompetition.id}/edit`);
     } else {
       dispatch(listCompetitions());
     }
@@ -114,7 +114,7 @@ const CompetitionListScreen = ({ history, match }) => {
                 <td>{competition.end_date}</td>
 
                 <td>
-                  <LinkContainer to={`/competition/${competition.id}/edit`}>
+                  <LinkContainer to={`/competitions/${competition.id}/edit`}>
                     <Button variant="light" className="btn-sm">
                       <i className="fas fa-edit"></i>
                     </Button>
