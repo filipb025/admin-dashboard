@@ -8,10 +8,12 @@ import {
   COMPETITION_CREATE_REQUEST,
   COMPETITION_CREATE_FAIL,
   COMPETITION_CREATE_SUCCESS,
-  COMPETITION_CREATE_RESET,
   COMPETITION_DETAILS_SUCCESS,
   COMPETITION_DETAILS_FAIL,
   COMPETITION_DETAILS_REQUEST,
+  COMPETITION_UPDATE_FAIL,
+  COMPETITION_UPDATE_SUCCESS,
+  COMPETITION_UPDATE_REQUEST,
 } from "../constants/competitionConstants";
 import axios from "axios";
 
@@ -152,3 +154,42 @@ export const createCompetition = () => async (dispatch, getState) => {
     });
   }
 };
+
+export const updateCompetition =
+  (competition) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: COMPETITION_UPDATE_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.auth.token}`,
+        },
+      };
+
+      const { data } = await axios.patch(
+        `/api/competition/${competition.id}`,
+        competition,
+        config
+      );
+
+      dispatch({
+        type: COMPETITION_UPDATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: COMPETITION_UPDATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };

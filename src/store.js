@@ -11,6 +11,7 @@ import {
   competitionDeleteReducer,
   competitionCreateReducer,
   competitionDetailsReducer,
+  competitionUpdateReducer,
 } from "./reducers/competitionReducer";
 
 const reducer = combineReducers({
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   competitionList: competitionListReducer,
   competitionDelete: competitionDeleteReducer,
   competitionCreate: competitionCreateReducer,
+  competitionUpdate: competitionUpdateReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
