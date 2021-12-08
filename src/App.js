@@ -20,10 +20,10 @@ function App() {
             path="/competitions/:id/edit"
             component={CompetitionEditScreen}
           />
-          <Route path="/competitions" component={CompetitionListScreen} />
+          <Route path="/competitions" component={CompetitionListScreen} exact />
           <Route path="/dashboard" component={DashboardScreen} />
           <Route path="/users/:id/edit" component={UserEditScreen} />
-          <Route path="/users" component={UserListScreen} />
+          <Route path="/users" component={UserListScreen} exact />
           <Route path="/profile" component={ProfileScreen} exact />
           <Route path="/" component={LoginScreen} exact />
         </Container>
