@@ -12,6 +12,7 @@ import {
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
+  USER_LIST_RESET,
 } from "../constants/userConstants";
 import { COMPETITION_LIST_RESET } from "../constants/competitionConstants";
 import axios from "axios";
@@ -52,6 +53,7 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
   dispatch({ type: COMPETITION_LIST_RESET });
+  dispatch({ type: USER_LIST_RESET });
 };
 
 export const getUserDetails = (id) => async (dispatch, getState) => {

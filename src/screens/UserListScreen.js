@@ -6,15 +6,22 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { listUsers } from "../actions/userActions";
 
-const UserListScreen = () => {
+const UserListScreen = ({ history }) => {
   const dispatch = useDispatch();
 
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   useEffect(() => {
-    dispatch(listUsers());
-  }, [dispatch]);
+    if (userInfo) {
+      dispatch(listUsers());
+    } else {
+      history.push("/");
+    }
+  }, [dispatch, history]);
 
   const deleteHandler = (id) => {
     console.log("delete user");
@@ -28,14 +35,20 @@ const UserListScreen = () => {
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <Table striped bordered hover responsive className="table-sm">
+        <Table
+          striped
+          bordered
+          hover
+          responsive
+          className="table-sm text-center"
+        >
           <thead>
             <tr>
               <th>ID</th>
-              <th>FIRST NAME</th>
-              <th>LAST NAME</th>
-              <th>EMAIL</th>
-              <th>PHONE</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Phone</th>
               <th></th>
             </tr>
           </thead>
