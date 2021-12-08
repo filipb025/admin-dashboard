@@ -6,6 +6,7 @@ import {
   userDetailsReducer,
   userUpdateProfileReducer,
   userListReducer,
+  userUpdateReducer,
 } from "./reducers/userReducers";
 import {
   competitionListReducer,
@@ -18,8 +19,9 @@ import {
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userDetails: userDetailsReducer,
-  userUpdateProfile: userUpdateProfileReducer,
   userList: userListReducer,
+  userUpdate: userUpdateReducer,
+  userUpdateProfile: userUpdateProfileReducer,
   competitionDetails: competitionDetailsReducer,
   competitionList: competitionListReducer,
   competitionDelete: competitionDeleteReducer,
