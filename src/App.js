@@ -7,6 +7,7 @@ import DashboardScreen from "./screens/DashboardScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import CompetitionListScreen from "./screens/CompetitionListScreen";
 import CompetitionEditScreen from "./screens/CompetitionEditScreen";
+import UserListScreen from "./screens/UserListScreen";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           />
           <Route path="/competitions" component={CompetitionListScreen} />
           <Route path="/dashboard" component={DashboardScreen} />
+          <Route path="/users" component={UserListScreen} />
           <Route path="/profile" component={ProfileScreen} exact />
           <Route path="/" component={LoginScreen} exact />
         </Container>
