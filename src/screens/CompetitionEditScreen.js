@@ -15,7 +15,8 @@ const CompetitionEditScreen = ({ match, history }) => {
   const competitionId = match.params.id;
 
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const dispatch = useDispatch();
 
@@ -38,7 +39,8 @@ const CompetitionEditScreen = ({ match, history }) => {
         dispatch(listCompetitionDetails(competitionId));
       } else {
         setName(competition.name);
-        setDescription(competition.description);
+        setStartDate(competition.start_date);
+        setEndDate(competition.end_date);
       }
     }
   }, [dispatch, history, competitionId, competition, successUpdate]);
@@ -63,7 +65,8 @@ const CompetitionEditScreen = ({ match, history }) => {
       updateCompetition({
         id: competitionId,
         name,
-        description,
+        startDate,
+        endDate,
       })
     );
   };
@@ -92,13 +95,23 @@ const CompetitionEditScreen = ({ match, history }) => {
                 onChange={(e) => setName(e.target.value)}
               ></Form.Control>
             </Form.Group>
-            <Form.Group controlId="description">
-              <Form.Label>Description</Form.Label>
+            <Form.Group controlId="startDate">
+              <Form.Label>Start Date</Form.Label>
               <Form.Control
-                type="description"
-                placeholder="Enter description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                type="date"
+                placeholder="Select Start Date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="endDate">
+              <Form.Label>End Date</Form.Label>
+              <Form.Control
+                type="date"
+                placeholder="Select End Date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
               ></Form.Control>
             </Form.Group>
 

@@ -4,14 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
+import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 
-const ProfileScreen = ({ history }) => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
+const ProfileScreen = ({ location, match, history }) => {
+  // const [firstName, setFirstName] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [phone, setPhone] = useState("");
   const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
@@ -29,22 +28,34 @@ const ProfileScreen = ({ history }) => {
     if (!userInfo) {
       history.push("/");
     } else {
-      if (!user.name) {
-        dispatch(getUserDetails("profile"));
+      if (user) {
+        dispatch(
+          getUserDetails(JSON.parse(localStorage.getItem("userInfo")).userId)
+        );
       } else {
-        setEmail(user.email);
+        setName(user.first_name);
+        setPassword(user.password);
+        setConfirmPassword(user.password);
       }
     }
-  }, [dispatch, history, userInfo, user]);
+  }, [dispatch, history, userInfo, success]);
 
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       console.log("Passwords do not match");
     } else {
-      dispatch(updateUserProfile({ id: user.id, firstName, email, password }));
+      dispatch(
+        updateUserProfile({
+          id: user.id,
+          name,
+          // f l name
+          password,
+        })
+      );
     }
   };
+  console.log(submitHandler);
 
   return (
     <Row>
@@ -56,43 +67,13 @@ const ProfileScreen = ({ history }) => {
         {success && <Message variant="success">Profile Updated</Message>}
         {loading && <Loader />}
         <Form onSubmit={submitHandler}>
-          <Form.Group controlId="firstName">
-            <Form.Label>First Name</Form.Label>
+          <Form.Group controlId="name">
+            <Form.Label>Name</Form.Label>
             <Form.Control
-              type="firstName"
-              placeholder="First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-
-          <Form.Group controlId="lastName">
-            <Form.Label>Last Name</Form.Label>
-            <Form.Control
-              type="lastName"
-              placeholder="Last Name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-
-          <Form.Group controlId="phone">
-            <Form.Label>Phone Number</Form.Label>
-            <Form.Control
-              type="phone"
-              placeholder="Phone"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-
-          <Form.Group controlId="email">
-            <Form.Label>Email Address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="name"
+              placeholder="Enter name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             ></Form.Control>
           </Form.Group>
 

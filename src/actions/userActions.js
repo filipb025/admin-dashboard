@@ -63,7 +63,6 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.auth.token}`,
       },
     };
@@ -102,7 +101,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.patch(`/api/user/profile`, user, config);
+    const { data } = await axios.patch(`/api/user/${user.id}`, user, config);
 
     dispatch({
       type: USER_UPDATE_PROFILE_SUCCESS,
