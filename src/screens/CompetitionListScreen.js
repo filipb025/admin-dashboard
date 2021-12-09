@@ -1,9 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { Table, Button, Row, Col } from "react-bootstrap";
+import Multiselect from "multiselect-react-dropdown";
+import {
+  Table,
+  Button,
+  Row,
+  Col,
+  Modal,
+  Form,
+  InputGroup,
+} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import axios from "axios";
 import {
   listCompetitions,
   deleteCompetition,
@@ -12,6 +22,14 @@ import {
 import { COMPETITION_CREATE_RESET } from "../constants/competitionConstants";
 
 const CompetitionListScreen = ({ history, match }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [name, setName] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [checkCompetition, setCheckCompetition] = useState(false);
+
+  const [field, setField] = useState([]);
+
   const dispatch = useDispatch();
 
   const competitionList = useSelector((state) => state.competitionList);
@@ -48,11 +66,7 @@ const CompetitionListScreen = ({ history, match }) => {
       history.push("/");
     }
 
-    if (successCreate) {
-      history.push(`/competitions/${createdCompetition.id}/edit`);
-    } else {
-      dispatch(listCompetitions());
-    }
+    dispatch(listCompetitions());
   }, [
     dispatch,
     history,
@@ -68,8 +82,19 @@ const CompetitionListScreen = ({ history, match }) => {
     }
   };
 
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+
   const createCompetitionHandler = () => {
-    dispatch(createCompetition());
+    dispatch(
+      createCompetition({
+        name,
+        startDate,
+        endDate,
+        isPrivate: false,
+        type: checkCompetition,
+      })
+    );
   };
 
   return (
@@ -77,9 +102,82 @@ const CompetitionListScreen = ({ history, match }) => {
       <Row className="align-items-center">
         <Col className="text-right">
           <h1>Competitions</h1>
-          <Button className="my-3" onClick={createCompetitionHandler}>
+          <Button className="my-3" onClick={handleShowModal}>
             <i className="fas fa-plus"></i> Create Competition
           </Button>
+
+          <Modal
+            backdrop="static"
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            show={showModal}
+            onHide={handleCloseModal}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Create Competition</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form>
+                <Form.Group className="mb-3" controlId="name">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    type="text"
+                    placeholder="Enter competition name"
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="startDate">
+                  <Form.Label>Start Date</Form.Label>
+                  <Form.Control
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    type="date"
+                    placeholder="Select start date"
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="endDate">
+                  <Form.Label>End Date</Form.Label>
+                  <Form.Control
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    type="date"
+                    placeholder="Select end date"
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="competitionType">
+                  <Form.Label className="mx-3">Type</Form.Label>
+                  <Form.Check
+                    type="checkbox"
+                    label="Team Competition"
+                    inline
+                    value={checkCompetition}
+                    onChange={(e) => setCheckCompetition(e.target.checked)}
+                  />
+                </Form.Group>
+                {checkCompetition && (
+                  <Multiselect
+                    selectionLimit={2}
+                    placeholder="Select 2 Teams"
+                    displayValue="name"
+                    closeOnSelect={false}
+                  />
+                )}
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={createCompetitionHandler}>
+                Create
+              </Button>
+              <Button variant="secondary" onClick={handleCloseModal}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </Col>
       </Row>
       {loadingDelete && <Loader />}

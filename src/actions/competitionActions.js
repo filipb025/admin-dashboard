@@ -113,47 +113,43 @@ export const deleteCompetition = (id) => async (dispatch, getState) => {
   }
 };
 
-export const createCompetition = () => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: COMPETITION_CREATE_REQUEST,
-    });
+export const createCompetition =
+  (competition) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: COMPETITION_CREATE_REQUEST,
+      });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+      const {
+        userLogin: { userInfo },
+      } = getState();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.auth.token}`,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.auth.token}`,
+        },
+      };
 
-    const { data } = await axios.post(
-      `/api/competition/`,
-      {
-        // name: "",
-        // startDate: new Date().toISOString().slice(0, 19).replace("T", " "),
-        // endDate: new Date().toISOString().slice(0, 19).replace("T", " "),
-        // private: "",
-      },
-      config
-    );
+      const { data } = await axios.post(
+        `/api/competition/`,
+        competition,
+        config
+      );
 
-    dispatch({
-      type: COMPETITION_CREATE_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: COMPETITION_CREATE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      dispatch({
+        type: COMPETITION_CREATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: COMPETITION_CREATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const updateCompetition =
   (competition) => async (dispatch, getState) => {
