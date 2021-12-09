@@ -132,10 +132,10 @@ export const createCompetition = () => async (dispatch, getState) => {
     const { data } = await axios.post(
       `/api/competition/`,
       {
-        name: "test",
-        startDate: new Date().toISOString().slice(0, 19).replace("T", " "),
-        endDate: new Date().toISOString().slice(0, 19).replace("T", " "),
-        private: "",
+        // name: "",
+        // startDate: new Date().toISOString().slice(0, 19).replace("T", " "),
+        // endDate: new Date().toISOString().slice(0, 19).replace("T", " "),
+        // private: "",
       },
       config
     );

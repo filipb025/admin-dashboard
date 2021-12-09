@@ -24,7 +24,6 @@ const ProfileScreen = ({ location, match, history }) => {
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
   const { success } = userUpdateProfile;
 
-  console.log(user);
   useEffect(() => {
     if (!userInfo) {
       history.push("/");
