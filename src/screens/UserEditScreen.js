@@ -43,7 +43,14 @@ const UserEditScreen = ({ match, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(updateUser({ id: userId, firstName, lastName, password }));
+    dispatch(
+      updateUser({
+        id: userId,
+        first_name: firstName,
+        last_name: lastName,
+        password,
+      })
+    );
   };
 
   return (

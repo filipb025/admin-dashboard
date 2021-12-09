@@ -109,6 +109,7 @@ const CompetitionListScreen = ({ history, match }) => {
               <th>Created At</th>
               <th>Updated At</th>
               <th>User</th>
+              <th>Teams</th>
               <th>Type</th>
               <th>Private</th>
               <th></th>
@@ -125,6 +126,7 @@ const CompetitionListScreen = ({ history, match }) => {
                 <td>{competition.created_at}</td>
                 <td>{competition.updated_at}</td>
                 <td>{competition.user}</td>
+                <td>{competition.teams}</td>
                 <td>{competition.type}</td>
                 <td>{competition.private}</td>
 
