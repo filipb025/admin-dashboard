@@ -19,6 +19,7 @@ import {
   deleteCompetition,
   createCompetition,
 } from "../actions/competitionActions";
+import { listTeams } from "../actions/teamActions";
 import { COMPETITION_CREATE_RESET } from "../constants/competitionConstants";
 
 const CompetitionListScreen = ({ history, match }) => {
@@ -27,13 +28,18 @@ const CompetitionListScreen = ({ history, match }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [checkCompetition, setCheckCompetition] = useState(false);
-
+  const [selectedTeams, setSelectedTeams] = useState([]);
   const [field, setField] = useState([]);
 
   const dispatch = useDispatch();
 
   const competitionList = useSelector((state) => state.competitionList);
   const { loading, error, competitions } = competitionList;
+
+  const teamList = useSelector((state) => state.teamList);
+  const { loading: loadingTeams, error: errorTeams, teams } = teamList;
+
+  const teamOptions = teams;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -67,6 +73,7 @@ const CompetitionListScreen = ({ history, match }) => {
     }
 
     dispatch(listCompetitions());
+    dispatch(listTeams());
   }, [
     dispatch,
     history,
@@ -85,6 +92,11 @@ const CompetitionListScreen = ({ history, match }) => {
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
+  const onSelect = (selectedItem) => {
+    setSelectedTeams(selectedItem);
+    console.log(selectedItem);
+  };
+
   const createCompetitionHandler = () => {
     dispatch(
       createCompetition({
@@ -93,9 +105,11 @@ const CompetitionListScreen = ({ history, match }) => {
         endDate,
         isPrivate: false,
         type: checkCompetition,
+        teams,
       })
     );
   };
+  console.log(createCompetitionHandler);
 
   return (
     <>
@@ -161,10 +175,13 @@ const CompetitionListScreen = ({ history, match }) => {
                 </Form.Group>
                 {checkCompetition && (
                   <Multiselect
+                    options={teamOptions}
                     selectionLimit={2}
                     placeholder="Select 2 Teams"
                     displayValue="name"
                     closeOnSelect={false}
+                    value={selectedTeams}
+                    onSelect={onSelect}
                   />
                 )}
               </Form>
@@ -206,7 +223,7 @@ const CompetitionListScreen = ({ history, match }) => {
               <th>End Date</th>
               <th>Created At</th>
               <th>Updated At</th>
-              <th>User</th>
+              <th>Users</th>
               <th>Teams</th>
               <th>Type</th>
               <th>Private</th>
@@ -223,7 +240,7 @@ const CompetitionListScreen = ({ history, match }) => {
 
                 <td>{competition.created_at}</td>
                 <td>{competition.updated_at}</td>
-                <td>{competition.user}</td>
+                <td>{competition.users[1]}</td>
                 <td>{competition.teams}</td>
                 <td>{competition.type}</td>
                 <td>{competition.private}</td>

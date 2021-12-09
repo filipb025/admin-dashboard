@@ -15,7 +15,7 @@ import {
   competitionDetailsReducer,
   competitionUpdateReducer,
 } from "./reducers/competitionReducer";
-
+import { teamListReducer } from "./reducers/teamReducers";
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userDetails: userDetailsReducer,
@@ -27,6 +27,7 @@ const reducer = combineReducers({
   competitionDelete: competitionDeleteReducer,
   competitionCreate: competitionCreateReducer,
   competitionUpdate: competitionUpdateReducer,
+  teamList: teamListReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
