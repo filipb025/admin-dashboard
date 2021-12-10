@@ -6,6 +6,9 @@ import {
   TEAM_DETAILS_REQUEST,
   TEAM_DETAILS_SUCCESS,
   TEAM_DETAILS_FAIL,
+  TEAM_DELETE_REQUEST,
+  TEAM_DELETE_SUCCESS,
+  TEAM_DELETE_FAIL,
 } from "../constants/teamConstants";
 import axios from "axios";
 
@@ -61,6 +64,38 @@ export const listTeamDetails = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: TEAM_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deleteTeam = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: TEAM_DELETE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.auth.token}`,
+      },
+    };
+
+    await axios.delete(`/api/team/${id}`, config);
+
+    dispatch({
+      type: TEAM_DELETE_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: TEAM_DELETE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

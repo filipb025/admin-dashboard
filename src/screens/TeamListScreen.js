@@ -13,16 +13,30 @@ import {
   Form,
   InputGroup,
 } from "react-bootstrap";
-import { listTeams } from "../actions/teamActions";
+import { listTeams, deleteTeam } from "../actions/teamActions";
 
 const TeamListScreen = () => {
   const dispatch = useDispatch();
+
   const teamList = useSelector((state) => state.teamList);
   const { loading, error, teams } = teamList;
 
+  const teamDelete = useSelector((state) => state.teamDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = teamDelete;
+
   useEffect(() => {
     dispatch(listTeams());
-  }, [dispatch]);
+  }, [dispatch, successDelete]);
+
+  const deleteHandler = (id) => {
+    if (window.confirm("Are you sure?")) {
+      dispatch(deleteTeam(id));
+    }
+  };
 
   return (
     <>
@@ -76,7 +90,7 @@ const TeamListScreen = () => {
                   <Button
                     variant="danger"
                     className="btn-sm"
-                    onClick={() => console.log("delete")}
+                    onClick={() => deleteHandler(team.id)}
                   >
                     <i className="fas fa-trash"></i>
                   </Button>
