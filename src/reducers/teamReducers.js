@@ -13,6 +13,10 @@ import {
   TEAM_LIST_REQUEST,
   TEAM_LIST_RESET,
   TEAM_LIST_SUCCESS,
+  TEAM_UPDATE_FAIL,
+  TEAM_UPDATE_REQUEST,
+  TEAM_UPDATE_RESET,
+  TEAM_UPDATE_SUCCESS,
 } from "../constants/teamConstants";
 
 export const teamListReducer = (state = { teams: [] }, action) => {
@@ -67,6 +71,21 @@ export const teamCreateReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case TEAM_CREATE_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const teamUpdateReducer = (state = { team: {} }, action) => {
+  switch (action.type) {
+    case TEAM_UPDATE_REQUEST:
+      return { loading: true };
+    case TEAM_UPDATE_SUCCESS:
+      return { loading: false, success: true, team: action.payload };
+    case TEAM_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case TEAM_UPDATE_RESET:
+      return { team: {} };
     default:
       return state;
   }

@@ -153,7 +153,7 @@ const TeamListScreen = () => {
                 <td>{team.logo}</td>
 
                 <td>
-                  <LinkContainer to="/">
+                  <LinkContainer to={`/teams/${team.id}/edit`}>
                     <Button variant="light" className="btn-sm">
                       <i className="fas fa-edit"></i>
                     </Button>

@@ -12,6 +12,9 @@ import {
   TEAM_CREATE_REQUEST,
   TEAM_CREATE_SUCCESS,
   TEAM_CREATE_FAIL,
+  TEAM_UPDATE_REQUEST,
+  TEAM_UPDATE_SUCCESS,
+  TEAM_UPDATE_FAIL,
 } from "../constants/teamConstants";
 import axios from "axios";
 
@@ -132,6 +135,40 @@ export const createTeam = (team) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: TEAM_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const updateTeam = (team) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: TEAM_UPDATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.auth.token}`,
+      },
+    };
+
+    const { data } = await axios.patch(`/api/team/${team.id}`, team, config);
+
+    dispatch({
+      type: TEAM_UPDATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: TEAM_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

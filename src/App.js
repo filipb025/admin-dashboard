@@ -10,6 +10,7 @@ import CompetitionEditScreen from "./screens/CompetitionEditScreen";
 import UserListScreen from "./screens/UserListScreen";
 import UserEditScreen from "./screens/UserEditScreen";
 import TeamListScreen from "./screens/TeamListScreen";
+import TeamEditScreen from "./screens/TeamEditScreen";
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
             path="/competitions/:id/edit"
             component={CompetitionEditScreen}
           />
-          <Route path="/teams" component={TeamListScreen} />
+          <Route path="/teams/:id/edit" component={TeamEditScreen} />
+          <Route path="/teams" component={TeamListScreen} exact />
           <Route path="/competitions" component={CompetitionListScreen} exact />
           <Route path="/dashboard" component={DashboardScreen} />
           <Route path="/users/:id/edit" component={UserEditScreen} />
