@@ -35,7 +35,7 @@ const CompetitionEditScreen = ({ match, history }) => {
       dispatch({ type: COMPETITION_UPDATE_RESET });
       history.push("/competitions");
     } else {
-      if (competition.id === competitionId) {
+      if (competition.id !== competitionId) {
         dispatch(listCompetitionDetails(competitionId));
       } else {
         setName(competition.name);
@@ -43,7 +43,7 @@ const CompetitionEditScreen = ({ match, history }) => {
         setEndDate(competition.end_date);
       }
     }
-  }, [dispatch, history, competitionId, competition, successUpdate]);
+  }, [dispatch, history, competitionId, successUpdate]);
 
   // useEffect(() => {
   //   if (successUpdate) {

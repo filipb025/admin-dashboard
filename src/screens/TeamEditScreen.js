@@ -31,14 +31,14 @@ const TeamEditScreen = ({ match, history }) => {
       dispatch({ type: TEAM_UPDATE_RESET });
       history.push("/teams");
     } else {
-      if (team.id === teamId) {
+      if (team.id !== teamId) {
         dispatch(listTeamDetails(teamId));
       } else {
+        setDescription(description);
         setName(team.name);
-        setDescription(team.description);
       }
     }
-  }, [dispatch, history, teamId, team, successUpdate]);
+  }, [dispatch, history, teamId, successUpdate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
