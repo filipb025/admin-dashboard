@@ -13,9 +13,13 @@ import {
   Form,
   InputGroup,
 } from "react-bootstrap";
-import { listTeams, deleteTeam } from "../actions/teamActions";
+import { listTeams, deleteTeam, createTeam } from "../actions/teamActions";
 
 const TeamListScreen = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
   const dispatch = useDispatch();
 
   const teamList = useSelector((state) => state.teamList);
@@ -28,9 +32,17 @@ const TeamListScreen = () => {
     success: successDelete,
   } = teamDelete;
 
+  const teamCreate = useSelector((state) => state.teamCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    team: createdTeam,
+  } = teamCreate;
+
   useEffect(() => {
     dispatch(listTeams());
-  }, [dispatch, successDelete]);
+  }, [dispatch, successDelete, successCreate, createdTeam]);
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure?")) {
@@ -38,16 +50,75 @@ const TeamListScreen = () => {
     }
   };
 
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+
+  const createTeamHandler = () => {
+    dispatch(
+      createTeam({
+        name,
+        description,
+      })
+    );
+  };
+
   return (
     <>
       <Row className="align-items-center">
         <Col className="text-right">
           <h1>Teams</h1>
-          <Button className="my-3">
+          <Button className="my-3" onClick={handleShowModal}>
             <i className="fas fa-plus"></i> Create Team
           </Button>
+          <Modal
+            backdrop="static"
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            show={showModal}
+            onHide={handleCloseModal}
+          >
+            {" "}
+            <Modal.Header closeButton>
+              <Modal.Title>Create Team</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form>
+                <Form.Group className="mb-3" controlId="name">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    type="text"
+                    placeholder="Enter team name"
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="description">
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    type="text"
+                    placeholder="Enter team description"
+                  />
+                </Form.Group>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={createTeamHandler}>
+                Create
+              </Button>
+              <Button variant="secondary" onClick={handleCloseModal}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </Col>
       </Row>
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (

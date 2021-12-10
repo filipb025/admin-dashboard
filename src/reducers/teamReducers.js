@@ -1,4 +1,8 @@
 import {
+  TEAM_CREATE_FAIL,
+  TEAM_CREATE_REQUEST,
+  TEAM_CREATE_RESET,
+  TEAM_CREATE_SUCCESS,
   TEAM_DELETE_FAIL,
   TEAM_DELETE_REQUEST,
   TEAM_DELETE_SUCCESS,
@@ -48,6 +52,21 @@ export const teamDeleteReducer = (state = {}, action) => {
     case TEAM_DELETE_FAIL:
       return { loading: false, error: action.payload };
 
+    default:
+      return state;
+  }
+};
+
+export const teamCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case TEAM_CREATE_REQUEST:
+      return { loading: true };
+    case TEAM_CREATE_SUCCESS:
+      return { loading: false, success: true, team: action.payload };
+    case TEAM_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    case TEAM_CREATE_RESET:
+      return {};
     default:
       return state;
   }

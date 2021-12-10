@@ -9,6 +9,9 @@ import {
   TEAM_DELETE_REQUEST,
   TEAM_DELETE_SUCCESS,
   TEAM_DELETE_FAIL,
+  TEAM_CREATE_REQUEST,
+  TEAM_CREATE_SUCCESS,
+  TEAM_CREATE_FAIL,
 } from "../constants/teamConstants";
 import axios from "axios";
 
@@ -96,6 +99,39 @@ export const deleteTeam = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: TEAM_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const createTeam = (team) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: TEAM_CREATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.auth.token}`,
+      },
+    };
+
+    const { data } = await axios.post(`/api/team/`, team, config);
+
+    dispatch({
+      type: TEAM_CREATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: TEAM_CREATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

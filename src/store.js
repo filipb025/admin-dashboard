@@ -19,6 +19,7 @@ import {
   teamListReducer,
   teamDetailsReducer,
   teamDeleteReducer,
+  teamCreateReducer,
 } from "./reducers/teamReducers";
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -34,6 +35,7 @@ const reducer = combineReducers({
   teamList: teamListReducer,
   teamDetails: teamDetailsReducer,
   teamDelete: teamDeleteReducer,
+  teamCreate: teamCreateReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
