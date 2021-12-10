@@ -37,11 +37,10 @@ const CompetitionEditScreen = ({ match, history }) => {
     } else {
       if (competition.id !== competitionId) {
         dispatch(listCompetitionDetails(competitionId));
-      } else {
-        setName(competition.name);
-        setStartDate(competition.start_date);
-        setEndDate(competition.end_date);
       }
+      setName(competition.name);
+      setStartDate(competition.start_date);
+      setEndDate(competition.end_date);
     }
   }, [dispatch, history, competitionId, successUpdate]);
 

@@ -34,10 +34,9 @@ const UserEditScreen = ({ match, history }) => {
     } else {
       if (!user || user.id !== userId) {
         dispatch(getUserDetails(userId));
-      } else {
-        setFirstName(user.first_name);
-        setLastName(user.last_name);
       }
+      setFirstName(user.first_name);
+      setLastName(user.last_name);
     }
   }, [dispatch, history, userId, successUpdate]);
 

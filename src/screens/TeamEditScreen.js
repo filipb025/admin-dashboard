@@ -33,12 +33,12 @@ const TeamEditScreen = ({ match, history }) => {
     } else {
       if (team.id !== teamId) {
         dispatch(listTeamDetails(teamId));
-      } else {
-        setDescription(description);
-        setName(team.name);
       }
+      setName(team.name);
+      setDescription(team.description);
     }
   }, [dispatch, history, teamId, successUpdate]);
+  console.log(name);
 
   const submitHandler = (e) => {
     e.preventDefault();

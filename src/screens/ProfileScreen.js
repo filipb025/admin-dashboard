@@ -32,12 +32,9 @@ const ProfileScreen = ({ location, match, history }) => {
         dispatch(
           getUserDetails(JSON.parse(localStorage.getItem("userInfo")).userId)
         );
-        setFirstName(user.first_name);
-        setLastName(user.last_name);
-        // setPassword(user.password);
-        // setConfirmPassword(user.password);
-      } else {
       }
+      setFirstName(user.first_name);
+      setLastName(user.last_name);
     }
   }, [dispatch, history, userInfo, success]);
 
