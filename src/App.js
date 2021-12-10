@@ -9,6 +9,7 @@ import CompetitionListScreen from "./screens/CompetitionListScreen";
 import CompetitionEditScreen from "./screens/CompetitionEditScreen";
 import UserListScreen from "./screens/UserListScreen";
 import UserEditScreen from "./screens/UserEditScreen";
+import TeamListScreen from "./screens/TeamListScreen";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             path="/competitions/:id/edit"
             component={CompetitionEditScreen}
           />
+          <Route path="/teams" component={TeamListScreen} />
           <Route path="/competitions" component={CompetitionListScreen} exact />
           <Route path="/dashboard" component={DashboardScreen} />
           <Route path="/users/:id/edit" component={UserEditScreen} />

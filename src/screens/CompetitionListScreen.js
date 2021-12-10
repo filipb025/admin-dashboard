@@ -93,8 +93,8 @@ const CompetitionListScreen = ({ history, match }) => {
   const handleCloseModal = () => setShowModal(false);
 
   const onSelect = (selectedItem) => {
-    setSelectedTeams(selectedItem);
-    console.log(selectedItem);
+    setSelectedTeams(selectedItem.find((item) => item.id).id);
+    console.log(selectedItem.find((item) => item.id).id);
   };
 
   const createCompetitionHandler = () => {
@@ -105,11 +105,10 @@ const CompetitionListScreen = ({ history, match }) => {
         endDate,
         isPrivate: false,
         type: checkCompetition,
-        teams,
+        teams: selectedTeams,
       })
     );
   };
-  console.log(createCompetitionHandler);
 
   return (
     <>
@@ -241,7 +240,7 @@ const CompetitionListScreen = ({ history, match }) => {
                 <td>{competition.created_at}</td>
                 <td>{competition.updated_at}</td>
                 <td>{competition.users[1]}</td>
-                <td>{competition.teams}</td>
+                {/* <td>{competition.teams}</td> */}
                 <td>{competition.type}</td>
                 <td>{competition.private}</td>
 
