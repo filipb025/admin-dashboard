@@ -22,6 +22,13 @@ import {
   teamCreateReducer,
   teamUpdateReducer,
 } from "./reducers/teamReducers";
+import {
+  competitionTeamListReducer,
+  competitionTeamDetailsReducer,
+  competitionTeamDeleteReducer,
+  competitionTeamCreateReducer,
+  competitionTeamUpdateReducer,
+} from "./reducers/competitionTeamReducers";
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userDetails: userDetailsReducer,
@@ -33,6 +40,11 @@ const reducer = combineReducers({
   competitionDelete: competitionDeleteReducer,
   competitionCreate: competitionCreateReducer,
   competitionUpdate: competitionUpdateReducer,
+  competitionTeamList: competitionTeamListReducer,
+  competitionTeamDetails: competitionTeamDetailsReducer,
+  competitionTeamDelete: competitionTeamDeleteReducer,
+  competitionTeamCreate: competitionTeamCreateReducer,
+  competitionTeamUpdate: competitionTeamUpdateReducer,
   teamList: teamListReducer,
   teamDetails: teamDetailsReducer,
   teamDelete: teamDeleteReducer,
