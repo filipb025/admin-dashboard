@@ -33,17 +33,12 @@ export const listCompetitions =
           Authorization: `Bearer ${userInfo.auth.token}`,
         },
         params: {
-          type,
           isPrivate,
+          type,
         },
       };
 
-      // const params = {
-      //   type: "user",
-      //   isPrivate: 0,
-      // };
-
-      const { data } = await axios.get(`/api/competition/`, config);
+      const { data } = await axios.get(`/api/competition`, config);
 
       dispatch({
         type: COMPETITION_LIST_SUCCESS,

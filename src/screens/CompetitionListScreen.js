@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import Multiselect from "multiselect-react-dropdown";
+import { Route } from "react-router-dom";
 import {
   Table,
   Button,
@@ -22,8 +23,11 @@ import {
 
 import { listTeams } from "../actions/teamActions";
 import { COMPETITION_CREATE_RESET } from "../constants/competitionConstants";
+import SearchBox from "../components/SearchBox";
 
 const CompetitionListScreen = ({ history, match }) => {
+  const type = match.params.type;
+  const isPrivate = match.params.isPrivate;
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState();
   const [startDate, setStartDate] = useState("");
@@ -60,7 +64,7 @@ const CompetitionListScreen = ({ history, match }) => {
   } = competitionCreate;
 
   const fetchData = () => {
-    dispatch(listCompetitions());
+    dispatch(listCompetitions(type, isPrivate));
   };
 
   useEffect(() => {
@@ -78,6 +82,8 @@ const CompetitionListScreen = ({ history, match }) => {
     successCreate,
     createdCompetition,
     userInfo,
+    type,
+    isPrivate,
   ]);
 
   const deleteHandler = (id) => {
@@ -104,25 +110,22 @@ const CompetitionListScreen = ({ history, match }) => {
         team: [...selectedTeams],
       })
     );
-
-    // dispatch(
-    //   createCompetitionTeam({
-    //     competition_id: 214,
-    //     team_id: [...selectedTeams],
-    //   })
-    // );
   };
   console.log(createdCompetition);
 
   return (
     <>
       <Row className="align-items-center">
-        <Col className="text-right">
-          <h1>Competitions</h1>
+        <h1>Competitions</h1>
+        <Col className="text-right d-inline-flex ">
           <Button className="my-3" onClick={handleShowModal}>
             <i className="fas fa-plus"></i> Create Competition
           </Button>
-
+          <Route render={({ history }) => <SearchBox history={history} />} />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
           <Modal
             backdrop="static"
             size="lg"

@@ -24,6 +24,22 @@ function App() {
           />
           <Route path="/teams/:id/edit" component={TeamEditScreen} />
           <Route path="/teams" component={TeamListScreen} exact />
+
+          <Route
+            path="/competitions/:type/:isPrivate"
+            component={CompetitionListScreen}
+            exact
+          />
+          <Route
+            path="/competitions/:type"
+            component={CompetitionListScreen}
+            exact
+          />
+          <Route
+            path="/competitions/:isPrivate"
+            component={CompetitionListScreen}
+            exact
+          />
           <Route path="/competitions" component={CompetitionListScreen} exact />
           <Route path="/dashboard" component={DashboardScreen} />
           <Route path="/users/:id/edit" component={UserEditScreen} />
