@@ -38,7 +38,6 @@ const TeamEditScreen = ({ match, history }) => {
       setDescription(team.description);
     }
   }, [dispatch, history, teamId, successUpdate]);
-  console.log(name);
 
   const submitHandler = (e) => {
     e.preventDefault();

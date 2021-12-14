@@ -17,38 +17,48 @@ import {
 } from "../constants/competitionConstants";
 import axios from "axios";
 
-export const listCompetitions = () => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: COMPETITION_LIST_REQUEST,
-    });
+export const listCompetitions =
+  (type, isPrivate) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: COMPETITION_LIST_REQUEST,
+      });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+      const {
+        userLogin: { userInfo },
+      } = getState();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.auth.token}`,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.auth.token}`,
+        },
+        params: {
+          type,
+          isPrivate,
+        },
+      };
 
-    const { data } = await axios.get(`/api/competition`, config);
+      // const params = {
+      //   type: "user",
+      //   isPrivate: 0,
+      // };
 
-    dispatch({
-      type: COMPETITION_LIST_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: COMPETITION_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      const { data } = await axios.get(`/api/competition/`, config);
+
+      dispatch({
+        type: COMPETITION_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: COMPETITION_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const listCompetitionDetails = (id) => async (dispatch, getState) => {
   try {

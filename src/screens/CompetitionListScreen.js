@@ -19,18 +19,18 @@ import {
   deleteCompetition,
   createCompetition,
 } from "../actions/competitionActions";
+
 import { listTeams } from "../actions/teamActions";
 import { COMPETITION_CREATE_RESET } from "../constants/competitionConstants";
 
 const CompetitionListScreen = ({ history, match }) => {
   const [showModal, setShowModal] = useState(false);
-  const [name, setName] = useState("");
+  const [name, setName] = useState();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [checkCompetition, setCheckCompetition] = useState(false);
   const [selectedTeams, setSelectedTeams] = useState([]);
   const [field, setField] = useState([]);
-
   const dispatch = useDispatch();
 
   const competitionList = useSelector((state) => state.competitionList);
@@ -59,20 +59,17 @@ const CompetitionListScreen = ({ history, match }) => {
     competition: createdCompetition,
   } = competitionCreate;
 
+  const fetchData = () => {
+    dispatch(listCompetitions());
+  };
+
   useEffect(() => {
     dispatch({ type: COMPETITION_CREATE_RESET });
-
-    // if (userInfo) {
-    //   dispatch(listCompetitions());
-    // } else {
-    //   history.push("/");
-    // }
 
     if (!userInfo) {
       history.push("/");
     }
-
-    dispatch(listCompetitions());
+    fetchData();
     dispatch(listTeams());
   }, [
     dispatch,
@@ -92,9 +89,8 @@ const CompetitionListScreen = ({ history, match }) => {
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
-  const onSelect = (selectedItem) => {
-    setSelectedTeams(selectedItem.find((item) => item.id).id);
-    console.log(selectedItem.find((item) => item.id).id);
+  const onSelectHandler = (e) => {
+    setSelectedTeams(Array.isArray(e) ? e.map((x) => x.id) : []);
   };
 
   const createCompetitionHandler = () => {
@@ -105,10 +101,18 @@ const CompetitionListScreen = ({ history, match }) => {
         endDate,
         isPrivate: false,
         type: checkCompetition,
-        teams: selectedTeams,
+        team: [...selectedTeams],
       })
     );
+
+    // dispatch(
+    //   createCompetitionTeam({
+    //     competition_id: 214,
+    //     team_id: [...selectedTeams],
+    //   })
+    // );
   };
+  console.log(createdCompetition);
 
   return (
     <>
@@ -180,7 +184,7 @@ const CompetitionListScreen = ({ history, match }) => {
                     displayValue="name"
                     closeOnSelect={false}
                     value={selectedTeams}
-                    onSelect={onSelect}
+                    onSelect={onSelectHandler}
                   />
                 )}
               </Form>
