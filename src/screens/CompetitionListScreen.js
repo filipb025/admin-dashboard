@@ -137,6 +137,8 @@ const CompetitionListScreen = ({ history, match }) => {
             <Modal.Header closeButton>
               <Modal.Title>Create Competition</Modal.Title>
             </Modal.Header>
+            {loadingCreate && <Loader />}
+            {errorCreate && <Message variant="danger">{errorCreate}</Message>}
             <Modal.Body>
               <Form>
                 <Form.Group className="mb-3" controlId="name">
@@ -205,9 +207,6 @@ const CompetitionListScreen = ({ history, match }) => {
       </Row>
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
-
-      {loadingCreate && <Loader />}
-      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
 
       {loading ? (
         <Loader />

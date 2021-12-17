@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link, Redirect } from "react-router-dom";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 
@@ -29,6 +29,7 @@ const TeamListScreen = () => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -80,6 +81,10 @@ const TeamListScreen = () => {
     dispatch(listTeamDetails(team));
     history.push(`/teams/${team.id}/edit`);
   };
+  const clearState = () => {
+    setName("");
+    setDescription("");
+  };
 
   return (
     <>
@@ -101,12 +106,19 @@ const TeamListScreen = () => {
             <Modal.Header closeButton>
               <Modal.Title>Create Team</Modal.Title>
             </Modal.Header>
+            {successCreate && (
+              <Message variant="success">Team created successfully</Message>
+            )}
+            {loadingCreate && <Loader />}
+            {errorCreate && <Message variant="danger">{errorCreate}</Message>}
             <Modal.Body>
               <Form>
                 <Form.Group className="mb-3" controlId="name">
-                  <Form.Label>Name</Form.Label>
+                  <Form.Label>
+                    Name <small>(required)</small>
+                  </Form.Label>
                   <Form.Control
-                    required="true"
+                    required={true}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     type="text"
@@ -137,9 +149,19 @@ const TeamListScreen = () => {
               </Form>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={createTeamHandler}>
-                Create
-              </Button>
+              {!name ? (
+                <Button
+                  disabled
+                  variant="secondary"
+                  onClick={createTeamHandler}
+                >
+                  Create
+                </Button>
+              ) : (
+                <Button variant="secondary" onClick={createTeamHandler}>
+                  Create
+                </Button>
+              )}
               <Button variant="secondary" onClick={handleCloseModal}>
                 Close
               </Button>
@@ -149,8 +171,7 @@ const TeamListScreen = () => {
       </Row>
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
-      {loadingCreate && <Loader />}
-      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
+
       {loading ? (
         <Loader />
       ) : error ? (

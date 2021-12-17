@@ -21,10 +21,6 @@ const SearchBox = ({ history }) => {
   const handleSelectIsPrivate = (e) => {
     setIsPrivate(e);
   };
-  const resetFilters = () => {
-    setType(0);
-    setIsPrivate(0);
-  };
 
   return (
     <>
@@ -56,9 +52,6 @@ const SearchBox = ({ history }) => {
 
         <Button type="submit" variant="outline-success" className="px-3 mx-3">
           Search
-        </Button>
-        <Button type="submit" onClick={resetFilters} variant="outline-warning">
-          Reset Filters
         </Button>
       </Form>
     </>

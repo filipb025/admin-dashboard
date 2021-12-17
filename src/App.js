@@ -18,26 +18,11 @@ function App() {
       <Header />
       <main className="py-3">
         <Container>
+          <Route path="/teams/:id/edit" component={TeamEditScreen} />
+          <Route path="/teams" component={TeamListScreen} exact />
           <Route
             path="/competitions/:id/edit"
             component={CompetitionEditScreen}
-          />
-          <Route path="/teams/:id/edit" component={TeamEditScreen} />
-          <Route path="/teams" component={TeamListScreen} exact />
-
-          <Route
-            path="/competitions/:type/:isPrivate"
-            component={CompetitionListScreen}
-            exact
-          />
-          <Route
-            path="/competitions/:type"
-            component={CompetitionListScreen}
-            exact
-          />
-          <Route
-            path="/competitions/:isPrivate"
-            component={CompetitionListScreen}
             exact
           />
           <Route path="/competitions" component={CompetitionListScreen} exact />
