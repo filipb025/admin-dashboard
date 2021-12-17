@@ -81,10 +81,6 @@ const TeamListScreen = () => {
     dispatch(listTeamDetails(team));
     history.push(`/teams/${team.id}/edit`);
   };
-  const clearState = () => {
-    setName("");
-    setDescription("");
-  };
 
   return (
     <>
@@ -139,7 +135,6 @@ const TeamListScreen = () => {
                   <Form.Control
                     type="file"
                     name="file"
-                    custom
                     id="image"
                     label="Choose File"
                     onChange={uploadFileHandler}
@@ -206,7 +201,6 @@ const TeamListScreen = () => {
                 <td>{team.logo}</td>
 
                 <td>
-                  {/* <Link to={`/teams/${team.id}/edit`}> */}
                   <Button
                     onClick={() => editTeams(team)}
                     variant="light"
@@ -214,7 +208,6 @@ const TeamListScreen = () => {
                   >
                     <i className="fas fa-edit"></i>
                   </Button>
-                  {/* </Link> */}
 
                   <Button
                     variant="danger"

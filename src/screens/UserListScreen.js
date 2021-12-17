@@ -5,7 +5,7 @@ import { Table, Button } from "react-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { listUsers } from "../actions/userActions";
-
+import { getUserDetails } from "../actions/userActions";
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch();
 
@@ -25,6 +25,11 @@ const UserListScreen = ({ history }) => {
 
   const deleteHandler = (id) => {
     console.log("delete user");
+  };
+
+  const editUsers = (user) => {
+    dispatch(getUserDetails(user));
+    history.push(`/users/${user.id}/edit`);
   };
 
   return (
@@ -49,6 +54,7 @@ const UserListScreen = ({ history }) => {
               <th>Last Name</th>
               <th>Email</th>
               <th>Phone</th>
+              <th>Image</th>
               <th></th>
             </tr>
           </thead>
@@ -58,16 +64,20 @@ const UserListScreen = ({ history }) => {
                 <td>{user.id}</td>
                 <td>{user.first_name}</td>
                 <td>{user.last_name}</td>
+                <td>{user.image}</td>
                 <td>
                   <a href={`mailto:${user.email}`}>{user.email}</a>
                 </td>
                 <td>{user.phone}</td>
                 <td>
-                  <LinkContainer to={`/users/${user.id}/edit`}>
-                    <Button variant="light" className="btn-sm">
-                      <i className="fas fa-edit"></i>
-                    </Button>
-                  </LinkContainer>
+                  <Button
+                    onClick={() => editUsers(user)}
+                    variant="light"
+                    className="btn-sm"
+                  >
+                    <i className="fas fa-edit"></i>
+                  </Button>
+
                   <Button
                     variant="danger"
                     className="btn-sm"

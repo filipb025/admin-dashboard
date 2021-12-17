@@ -26,6 +26,7 @@ const TeamEditScreen = ({ match, history }) => {
     error: errorUpdate,
     success: successUpdate,
   } = teamUpdate;
+
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: TEAM_UPDATE_RESET });
@@ -33,8 +34,7 @@ const TeamEditScreen = ({ match, history }) => {
     }
     setName(team.name);
     setDescription(team.description);
-  }, [dispatch, team, history, teamId, successUpdate]);
-
+  }, [dispatch, teamDetails, team, history, teamId, successUpdate]);
   const uploadFileHandler = (e) => {
     setImage(e.target.files[0]);
   };
@@ -91,7 +91,6 @@ const TeamEditScreen = ({ match, history }) => {
               <Form.Control
                 type="file"
                 name="file"
-                custom
                 id="image"
                 label="Choose File"
                 onChange={uploadFileHandler}

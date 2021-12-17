@@ -62,27 +62,11 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_LIST_RESET });
 };
 
-export const getUserDetails = (id) => async (dispatch, getState) => {
+export const getUserDetails = (user) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: USER_DETAILS_REQUEST,
-    });
-
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.auth.token}`,
-      },
-    };
-
-    const { data } = await axios.get(`/api/user/${id}`, config);
-
-    dispatch({
       type: USER_DETAILS_SUCCESS,
-      payload: data,
+      payload: user,
     });
   } catch (error) {
     dispatch({
