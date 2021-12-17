@@ -52,8 +52,6 @@ export const listTeams = () => async (dispatch, getState) => {
 
 export const listTeamDetails = (team) => async (dispatch, getState) => {
   try {
-    console.log("Object from action ", team);
-
     dispatch({
       type: TEAM_DETAILS_SUCCESS,
       payload: team,
@@ -102,6 +100,7 @@ export const deleteTeam = (id) => async (dispatch, getState) => {
 };
 
 export const createTeam = (team) => async (dispatch, getState) => {
+  console.log(team);
   try {
     dispatch({
       type: TEAM_CREATE_REQUEST,
@@ -117,7 +116,12 @@ export const createTeam = (team) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post(`/api/team/`, team, config);
+    const formData = new FormData();
+    formData.append("name", team.name);
+    formData.append("description", team.description);
+    formData.append("file", team.logo);
+
+    const { data } = await axios.post(`/api/team/`, formData, config);
 
     dispatch({
       type: TEAM_CREATE_SUCCESS,
@@ -154,7 +158,7 @@ export const updateTeam = (team) => async (dispatch, getState) => {
     const formData = new FormData();
     formData.append("name", team.name);
     formData.append("description", team.description);
-    formData.append("file", team.logo, "test.png");
+    formData.append("file", team.logo);
 
     const { data } = await axios.patch(
       `/api/team/${team.id}`,

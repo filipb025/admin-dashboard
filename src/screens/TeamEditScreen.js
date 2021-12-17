@@ -26,20 +26,17 @@ const TeamEditScreen = ({ match, history }) => {
     error: errorUpdate,
     success: successUpdate,
   } = teamUpdate;
-
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: TEAM_UPDATE_RESET });
       history.push("/teams");
     }
-    // dispatch(listTeamDetails(teamId));
     setName(team.name);
     setDescription(team.description);
-  }, [dispatch, history, teamId, successUpdate]);
+  }, [dispatch, team, history, teamId, successUpdate]);
 
   const uploadFileHandler = (e) => {
     setImage(e.target.files[0]);
-    console.log(e.target.files[0]);
   };
 
   const submitHandler = (e) => {
@@ -73,6 +70,7 @@ const TeamEditScreen = ({ match, history }) => {
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
               <Form.Control
+                name="name"
                 type="text"
                 placeholder="Enter name"
                 value={name}

@@ -27,6 +27,8 @@ const TeamListScreen = () => {
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -57,6 +59,9 @@ const TeamListScreen = () => {
       dispatch(deleteTeam(id));
     }
   };
+  const uploadFileHandler = (e) => {
+    setImage(e.target.files[0]);
+  };
 
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
@@ -66,6 +71,7 @@ const TeamListScreen = () => {
       createTeam({
         name,
         description,
+        logo: image,
       })
     );
   };
@@ -115,6 +121,18 @@ const TeamListScreen = () => {
                     type="text"
                     placeholder="Enter team description"
                   />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Image</Form.Label>
+                  <Form.Control
+                    type="file"
+                    name="file"
+                    custom
+                    id="image"
+                    label="Choose File"
+                    onChange={uploadFileHandler}
+                  ></Form.Control>
+                  {uploading && <Loader />}
                 </Form.Group>
               </Form>
             </Modal.Body>
