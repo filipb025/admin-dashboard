@@ -2,19 +2,10 @@ import React, { useEffect, useState } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import Multiselect from "multiselect-react-dropdown";
 import { Route } from "react-router-dom";
-import {
-  Table,
-  Button,
-  Row,
-  Col,
-  Modal,
-  Form,
-  InputGroup,
-} from "react-bootstrap";
+import { Table, Button, Row, Col, Modal, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import axios from "axios";
 import {
   listCompetitions,
   deleteCompetition,
@@ -111,7 +102,6 @@ const CompetitionListScreen = ({ history, match }) => {
       })
     );
   };
-  console.log(createdCompetition);
 
   return (
     <>

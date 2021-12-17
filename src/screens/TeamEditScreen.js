@@ -5,9 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { Link } from "react-router-dom";
-import { listTeamDetails, updateTeam } from "../actions/teamActions";
+import { updateTeam } from "../actions/teamActions";
 import { TEAM_UPDATE_RESET } from "../constants/teamConstants";
-import axios from "axios";
 const TeamEditScreen = ({ match, history }) => {
   const teamId = match.params.id;
   const [name, setName] = useState("");

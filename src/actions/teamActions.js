@@ -2,8 +2,6 @@ import {
   TEAM_LIST_FAIL,
   TEAM_LIST_REQUEST,
   TEAM_LIST_SUCCESS,
-  TEAM_LIST_RESET,
-  TEAM_DETAILS_REQUEST,
   TEAM_DETAILS_SUCCESS,
   TEAM_DETAILS_FAIL,
   TEAM_DELETE_REQUEST,
@@ -100,7 +98,6 @@ export const deleteTeam = (id) => async (dispatch, getState) => {
 };
 
 export const createTeam = (team) => async (dispatch, getState) => {
-  console.log(team);
   try {
     dispatch({
       type: TEAM_CREATE_REQUEST,
@@ -139,7 +136,6 @@ export const createTeam = (team) => async (dispatch, getState) => {
 };
 
 export const updateTeam = (team) => async (dispatch, getState) => {
-  console.log(team);
   try {
     dispatch({
       type: TEAM_UPDATE_REQUEST,

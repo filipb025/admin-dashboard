@@ -1,6 +1,5 @@
 import {
   USER_DETAILS_FAIL,
-  USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
   USER_LIST_FAIL,
   USER_LIST_REQUEST,
@@ -16,9 +15,6 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
-  USER_CREATE_REQUEST,
-  USER_CREATE_SUCCESS,
-  USER_CREATE_FAIL,
 } from "../constants/userConstants";
 import { COMPETITION_LIST_RESET } from "../constants/competitionConstants";
 import axios from "axios";
