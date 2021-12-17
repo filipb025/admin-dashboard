@@ -50,22 +50,13 @@ export const listTeams = () => async (dispatch, getState) => {
   }
 };
 
-export const listTeamDetails = (id) => async (dispatch, getState) => {
+export const listTeamDetails = (team) => async (dispatch, getState) => {
   try {
-    dispatch({ type: TEAM_DETAILS_REQUEST });
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    console.log("Object from action ", team);
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.auth.token}`,
-      },
-    };
-    const { data } = await axios.get(`/api/team/${id}`, config);
     dispatch({
       type: TEAM_DETAILS_SUCCESS,
-      payload: data,
+      payload: team,
     });
   } catch (error) {
     dispatch({
@@ -144,6 +135,7 @@ export const createTeam = (team) => async (dispatch, getState) => {
 };
 
 export const updateTeam = (team) => async (dispatch, getState) => {
+  console.log(team);
   try {
     dispatch({
       type: TEAM_UPDATE_REQUEST,
@@ -159,8 +151,16 @@ export const updateTeam = (team) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.auth.token}`,
       },
     };
+    const formData = new FormData();
+    formData.append("name", team.name);
+    formData.append("description", team.description);
+    formData.append("file", team.logo, "test.png");
 
-    const { data } = await axios.patch(`/api/team/${team.id}`, team, config);
+    const { data } = await axios.patch(
+      `/api/team/${team.id}`,
+      formData,
+      config
+    );
 
     dispatch({
       type: TEAM_UPDATE_SUCCESS,

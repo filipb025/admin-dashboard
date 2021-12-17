@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
-
+import { useHistory, Link } from "react-router-dom";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+
 import {
   Table,
   Button,
@@ -13,9 +14,16 @@ import {
   Form,
   InputGroup,
 } from "react-bootstrap";
-import { listTeams, deleteTeam, createTeam } from "../actions/teamActions";
+import {
+  listTeams,
+  deleteTeam,
+  createTeam,
+  listTeamDetails,
+} from "../actions/teamActions";
 
 const TeamListScreen = () => {
+  const history = useHistory();
+
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -62,6 +70,11 @@ const TeamListScreen = () => {
     );
   };
 
+  const editTeams = (team) => {
+    dispatch(listTeamDetails(team));
+    history.push(`/teams/${team.id}/edit`);
+  };
+
   return (
     <>
       <Row className="align-items-center">
@@ -87,6 +100,7 @@ const TeamListScreen = () => {
                 <Form.Group className="mb-3" controlId="name">
                   <Form.Label>Name</Form.Label>
                   <Form.Control
+                    required="true"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     type="text"
@@ -153,11 +167,16 @@ const TeamListScreen = () => {
                 <td>{team.logo}</td>
 
                 <td>
-                  <LinkContainer to={`/teams/${team.id}/edit`}>
-                    <Button variant="light" className="btn-sm">
-                      <i className="fas fa-edit"></i>
-                    </Button>
-                  </LinkContainer>
+                  {/* <Link to={`/teams/${team.id}/edit`}> */}
+                  <Button
+                    onClick={() => editTeams(team)}
+                    variant="light"
+                    className="btn-sm"
+                  >
+                    <i className="fas fa-edit"></i>
+                  </Button>
+                  {/* </Link> */}
+
                   <Button
                     variant="danger"
                     className="btn-sm"

@@ -6,10 +6,7 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { Link } from "react-router-dom";
 import { listTeamDetails, updateTeam } from "../actions/teamActions";
-import {
-  TEAM_UPDATE_RESET,
-  TEAM_UPDATE_REQUEST,
-} from "../constants/teamConstants";
+import { TEAM_UPDATE_RESET } from "../constants/teamConstants";
 import axios from "axios";
 const TeamEditScreen = ({ match, history }) => {
   const teamId = match.params.id;
@@ -35,35 +32,14 @@ const TeamEditScreen = ({ match, history }) => {
       dispatch({ type: TEAM_UPDATE_RESET });
       history.push("/teams");
     }
-    dispatch(listTeamDetails(teamId));
+    // dispatch(listTeamDetails(teamId));
     setName(team.name);
     setDescription(team.description);
   }, [dispatch, history, teamId, successUpdate]);
 
-  const uploadFileHandler = () => async (e, getState) => {
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("image", file);
-    setUploading(true);
-
-    try {
-      const {
-        userLogin: { userInfo },
-      } = getState();
-
-      const config = {
-        headers: {
-          Authorization: `Bearer ${userInfo.auth.token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      const { data } = await axios.post("/api/team", formData, config);
-      setImage(data);
-      setUploading(false);
-    } catch (error) {
-      console.log(error);
-      setUploading(false);
-    }
+  const uploadFileHandler = (e) => {
+    setImage(e.target.files[0]);
+    console.log(e.target.files[0]);
   };
 
   const submitHandler = (e) => {
@@ -114,7 +90,6 @@ const TeamEditScreen = ({ match, history }) => {
             </Form.Group>
             <Form.Group>
               <Form.Label>Image</Form.Label>
-
               <Form.Control
                 type="file"
                 name="file"
