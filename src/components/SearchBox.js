@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Form, Button, Dropdown, DropdownButton } from "react-bootstrap";
 import Select from "react-select";
-const SearchBox = ({ history }) => {
+const SearchBox = ({ history, searchKeyword, term }) => {
   const [type, setType] = useState("");
   const [isPrivate, setIsPrivate] = useState("");
+  const inputEl = useRef("");
 
   const competitionType = [
     { value: "", label: "All Competitions" },
@@ -32,24 +33,49 @@ const SearchBox = ({ history }) => {
     history.push(`/competitions/${Object.keys(e.value)}`);
   };
 
+  const getSearchTerm = () => {
+    searchKeyword(inputEl.current.value);
+  };
+  const clearFiltersHandler = () => {
+    setType("");
+    setIsPrivate("");
+    history.push("/competitions");
+  };
+
   return (
     <>
       <Form className="d-flex align-self-center  ms-3 px-3">
         <strong className="align-self-center">Filters: </strong>
         <Select
+          className="mx-1"
           placeholder="Select Competition Type"
           defaultValue={type}
           onChange={handleCompetitionType}
           options={competitionType}
         />
         <Select
+          className="mx-1"
           placeholder="Public / Private"
           defaultValue={isPrivate}
           onChange={handleIsPrivate}
           options={competitionIsPrivate}
         />
-        <Button type="submit" variant="outline-success" className="px-3 mx-3">
-          Search
+        <Form.Group className="mx-1">
+          <Form.Control
+            ref={inputEl}
+            type="text"
+            placeholder="Search..."
+            onChange={getSearchTerm}
+            value={term}
+          />
+        </Form.Group>
+        <Button
+          type="submit"
+          variant="outline-success"
+          className="px-3 mx-3"
+          onClick={clearFiltersHandler}
+        >
+          Clear Filters
         </Button>
       </Form>
     </>

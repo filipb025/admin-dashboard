@@ -26,6 +26,8 @@ const CompetitionListScreen = ({ history, match }) => {
   const [checkCompetition, setCheckCompetition] = useState(false);
   const [selectedTeams, setSelectedTeams] = useState([]);
   const [field, setField] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const dispatch = useDispatch();
 
   const competitionList = useSelector((state) => state.competitionList);
@@ -103,6 +105,20 @@ const CompetitionListScreen = ({ history, match }) => {
     );
   };
 
+  const searchHandler = (searchTerm) => {
+    setSearchTerm(searchTerm);
+    if (searchTerm !== "") {
+      const newCompetitionList = competitions.filter((competition) => {
+        return Object.values(competition)
+          .join(" ")
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+      });
+      setSearchResults(newCompetitionList);
+    } else {
+      setSearchResults(competitions);
+    }
+  };
   return (
     <>
       <Row className="align-items-center">
@@ -111,7 +127,15 @@ const CompetitionListScreen = ({ history, match }) => {
           <Button className="my-3" onClick={handleShowModal}>
             <i className="fas fa-plus"></i> Create Competition
           </Button>
-          <Route render={({ history }) => <SearchBox history={history} />} />
+          <Route
+            render={({ history }) => (
+              <SearchBox
+                term={searchTerm}
+                history={history}
+                searchKeyword={searchHandler}
+              />
+            )}
+          />
         </Col>
       </Row>
       <Row>
@@ -226,35 +250,71 @@ const CompetitionListScreen = ({ history, match }) => {
             </tr>
           </thead>
           <tbody>
-            {competitions.map((competition) => (
-              <tr key={competition.id}>
-                <td>{competition.id}</td>
-                <td>{competition.name}</td>
-                <td>{competition.start_date}</td>
-                <td>{competition.end_date}</td>
+            {searchTerm.length < 1
+              ? competitions.map((competition) => (
+                  <tr key={competition.id}>
+                    <td>{competition.id}</td>
+                    <td>{competition.name}</td>
+                    <td>{competition.start_date}</td>
+                    <td>{competition.end_date}</td>
 
-                <td>{competition.created_at}</td>
-                <td>{competition.updated_at}</td>
-                <td>{competition.user}</td>
-                <td>{competition.teams.name}</td>
-                <td>{competition.type}</td>
-                <td>{competition.private == "0" ? "Public" : "Private"}</td>
-                <td>
-                  <LinkContainer to={`/competitions/${competition.id}/edit`}>
-                    <Button variant="light" className="btn-sm">
-                      <i className="fas fa-edit"></i>
-                    </Button>
-                  </LinkContainer>
-                  <Button
-                    variant="danger"
-                    className="btn-sm"
-                    onClick={() => deleteHandler(competition.id)}
-                  >
-                    <i className="fas fa-trash"></i>
-                  </Button>
-                </td>
-              </tr>
-            ))}
+                    <td>{competition.created_at}</td>
+                    <td>{competition.updated_at}</td>
+                    <td>{competition.user}</td>
+                    <td>{competition.teams.name}</td>
+                    <td>{competition.type}</td>
+                    <td>{competition.private == "0" ? "Public" : "Private"}</td>
+                    <td>
+                      <LinkContainer
+                        to={`/competitions/${competition.id}/edit`}
+                      >
+                        <Button variant="light" className="btn-sm">
+                          <i className="fas fa-edit"></i>
+                        </Button>
+                      </LinkContainer>
+                      <Button
+                        variant="danger"
+                        className="btn-sm"
+                        onClick={() => deleteHandler(competition.id)}
+                      >
+                        <i className="fas fa-trash"></i>
+                      </Button>
+                    </td>
+                  </tr>
+                ))
+              : searchResults.map((searchResult) => (
+                  <tr key={searchResult.id}>
+                    <td>{searchResult.id}</td>
+                    <td>{searchResult.name}</td>
+                    <td>{searchResult.start_date}</td>
+                    <td>{searchResult.end_date}</td>
+
+                    <td>{searchResult.created_at}</td>
+                    <td>{searchResult.updated_at}</td>
+                    <td>{searchResult.user}</td>
+                    <td>{searchResult.teams.name}</td>
+                    <td>{searchResult.type}</td>
+                    <td>
+                      {searchResult.private == "0" ? "Public" : "Private"}
+                    </td>
+                    <td>
+                      <LinkContainer
+                        to={`/competitions/${searchResult.id}/edit`}
+                      >
+                        <Button variant="light" className="btn-sm">
+                          <i className="fas fa-edit"></i>
+                        </Button>
+                      </LinkContainer>
+                      <Button
+                        variant="danger"
+                        className="btn-sm"
+                        onClick={() => deleteHandler(searchResult.id)}
+                      >
+                        <i className="fas fa-trash"></i>
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
           </tbody>
         </Table>
       )}
