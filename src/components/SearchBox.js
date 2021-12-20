@@ -29,7 +29,7 @@ const SearchBox = ({ history }) => {
 
   const handleIsPrivate = (e) => {
     setIsPrivate(e.value);
-    history.push(`/competitions/${type}/${Object.keys(e.value)}`);
+    history.push(`/competitions/${Object.keys(e.value)}`);
   };
 
   return (

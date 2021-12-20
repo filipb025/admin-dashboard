@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Route, useLocation } from "react-router-dom";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { Container } from "react-bootstrap";
@@ -13,11 +13,14 @@ import TeamListScreen from "./screens/TeamListScreen";
 import TeamEditScreen from "./screens/TeamEditScreen";
 
 function App() {
+  const location = useLocation();
   return (
-    <Router>
-      <Header />
+    <>
+      {location.pathname !== "/" && <Header />}
+
       <main className="py-3">
         <Container>
+          <Route path="/" component={LoginScreen} exact />
           <Route path="/teams/:id/edit" component={TeamEditScreen} />
           <Route path="/teams" component={TeamListScreen} exact />
           <Route
@@ -27,21 +30,19 @@ function App() {
           />
 
           <Route
-            path="/competitions/:type?/:isPrivate?"
+            path="/competitions/:type/:isPrivate?"
             component={CompetitionListScreen}
-            exact
           />
 
-          {/* <Route path="/competitions" component={CompetitionListScreen} exact /> */}
+          <Route path="/competitions" component={CompetitionListScreen} exact />
           <Route path="/dashboard" component={DashboardScreen} />
           <Route path="/users/:id/edit" component={UserEditScreen} />
           <Route path="/users" component={UserListScreen} exact />
           <Route path="/profile" component={ProfileScreen} exact />
-          <Route path="/" component={LoginScreen} exact />
         </Container>
       </main>
       <Footer />
-    </Router>
+    </>
   );
 }
 
