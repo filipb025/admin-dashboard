@@ -16,41 +16,30 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
-        <Container>
-          <LinkContainer to="/dashboard">
-            <Navbar.Brand>Admin Dashboard</Navbar.Brand>
-          </LinkContainer>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto">
-              <LinkContainer to="/dashboard">
-                <Nav.Link>Dashboard</Nav.Link>
+      <Navbar
+        bg="dark"
+        variant="dark"
+        expand="lg"
+        collapseOnSelect
+        className="px-3"
+      >
+        <LinkContainer to="/dashboard">
+          <Navbar.Brand>Admin Dashboard</Navbar.Brand>
+        </LinkContainer>
+        <Nav className="ms-auto">
+          {userInfo ? (
+            <NavDropdown title="Admin" id="username">
+              <LinkContainer to="/profile">
+                <NavDropdown.Item>Profile</NavDropdown.Item>
               </LinkContainer>
-              <LinkContainer to="/teams">
-                <Nav.Link>Teams</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/users">
-                <Nav.Link>Users</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/competitions">
-                <Nav.Link>Competitions</Nav.Link>
-              </LinkContainer>
-              {userInfo ? (
-                <NavDropdown title="Admin" id="username">
-                  <LinkContainer to="/profile">
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
-                  </LinkContainer>
-                  <NavDropdown.Item onClick={logoutHandler}>
-                    Logout
-                  </NavDropdown.Item>
-                </NavDropdown>
-              ) : (
-                <Redirect to="/" />
-              )}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
+              <NavDropdown.Item onClick={logoutHandler}>
+                Logout
+              </NavDropdown.Item>
+            </NavDropdown>
+          ) : (
+            <Redirect to="/" />
+          )}
+        </Nav>
       </Navbar>
     </header>
   );

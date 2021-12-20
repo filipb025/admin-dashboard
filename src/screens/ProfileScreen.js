@@ -57,7 +57,6 @@ const ProfileScreen = ({ location, match, history }) => {
 
   return (
     <Row>
-      <Col md={4}>SIDEMENU</Col>
       <Col md={8}>
         <h2>User Info</h2>
         {message && <Message variant="danger">{message}</Message>}
