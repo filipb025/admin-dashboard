@@ -16,13 +16,19 @@ function App(props) {
   const location = useLocation();
   return (
     <>
-      {location.pathname !== "/" && <Header />}
+      {/* {location.pathname !== "/" && <Header />} */}
+      <Route
+        render={({ location }) =>
+          location.pathname !== "/" ? <Header /> : null
+        }
+      />
 
       <main className="">
         <Row className="flex-xl-nowrap gx-0">
-          <Col as={ApplicationDrawer} xs={12} md={3} lg={2} />
+          {location.pathname === "/" ? null : (
+            <Col as={ApplicationDrawer} xs={12} md={3} lg={2} />
+          )}
           <Col xs={12} md={9} lg={10} className="p-3">
-            {props.children}
             <Route path="/" component={LoginScreen} exact />
             <Route path="/teams/:id/edit" component={TeamEditScreen} />
             <Route path="/teams" component={TeamListScreen} exact />

@@ -26,16 +26,14 @@ const Header = () => {
         <LinkContainer to="/dashboard">
           <Navbar.Brand>Admin Dashboard</Navbar.Brand>
         </LinkContainer>
-        <Nav className="ms-auto">
+        <Nav className="ms-auto px-5">
           {userInfo ? (
-            <NavDropdown title="Admin" id="username">
+            <>
               <LinkContainer to="/profile">
-                <NavDropdown.Item>Profile</NavDropdown.Item>
+                <Nav.Link>Profile</Nav.Link>
               </LinkContainer>
-              <NavDropdown.Item onClick={logoutHandler}>
-                Logout
-              </NavDropdown.Item>
-            </NavDropdown>
+              <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>
+            </>
           ) : (
             <Redirect to="/" />
           )}
