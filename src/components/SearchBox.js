@@ -1,55 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Dropdown, DropdownButton } from "react-bootstrap";
-
+import Select from "react-select";
 const SearchBox = ({ history }) => {
-  const [type, setType] = useState(0);
-  const [isPrivate, setIsPrivate] = useState(0);
+  const [type, setType] = useState("");
+  const [isPrivate, setIsPrivate] = useState("");
 
-  const submitHandler = (e) => {
-    e.preventDefault();
+  const competitionType = [
+    { value: "", label: "All Competitions" },
+    { value: "team", label: "Team Competition" },
+    { value: "user", label: "User Competition" },
+  ];
 
-    if (type || isPrivate) {
-      history.push(`/competitions/${type}/${isPrivate}`);
-    } else {
-      history.push("/competitions");
-    }
+  const competitionIsPrivate = [
+    { value: "", label: "All Competitions" },
+    { value: { 0: "Public" }, label: "Public Competition" },
+    { value: { 1: "Private" }, label: "Private Competition" },
+  ];
+
+  useEffect(() => {
+    setType("");
+    setIsPrivate("");
+  }, [type, isPrivate]);
+
+  const handleCompetitionType = (e) => {
+    setType(e.value);
+    history.push(`/competitions/${e.value}/${isPrivate}`);
   };
 
-  const handleSelectType = (e) => {
-    setType(e);
-  };
-  const handleSelectIsPrivate = (e) => {
-    setIsPrivate(e);
+  const handleIsPrivate = (e) => {
+    setIsPrivate(e.value);
+    history.push(`/competitions/${type}/${Object.keys(e.value)}`);
   };
 
   return (
     <>
-      <Form
-        onSubmit={submitHandler}
-        className="d-flex align-self-center  ms-3 px-3"
-        inline
-      >
+      <Form className="d-flex align-self-center  ms-3 px-3">
         <strong className="align-self-center">Filters: </strong>
-        <DropdownButton
-          className="px-1"
-          title="Competition Type"
-          id="dropdown-menu-align-right"
-          onSelect={handleSelectType}
-        >
-          <Dropdown.Item eventKey="1">User Competitions</Dropdown.Item>
-          <Dropdown.Item eventKey="0">Team Competitions</Dropdown.Item>
-        </DropdownButton>
-
-        <DropdownButton
-          className="px-1"
-          title="Public / Private"
-          id="dropdown-menu-align-right"
-          onSelect={handleSelectIsPrivate}
-        >
-          <Dropdown.Item eventKey="1">Private Competitions</Dropdown.Item>
-          <Dropdown.Item eventKey="0">Public Competitions</Dropdown.Item>
-        </DropdownButton>
-
+        <Select
+          placeholder="Select Competition Type"
+          defaultValue={type}
+          onChange={handleCompetitionType}
+          options={competitionType}
+        />
+        <Select
+          placeholder="Public / Private"
+          defaultValue={isPrivate}
+          onChange={handleIsPrivate}
+          options={competitionIsPrivate}
+        />
         <Button type="submit" variant="outline-success" className="px-3 mx-3">
           Search
         </Button>

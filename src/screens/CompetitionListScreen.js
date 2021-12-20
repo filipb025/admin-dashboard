@@ -235,11 +235,10 @@ const CompetitionListScreen = ({ history, match }) => {
 
                 <td>{competition.created_at}</td>
                 <td>{competition.updated_at}</td>
-                <td>{competition.users[1]}</td>
-                {/* <td>{competition.teams}</td> */}
+                <td>{competition.user}</td>
+                <td>{competition.teams.name}</td>
                 <td>{competition.type}</td>
-                <td>{competition.private}</td>
-
+                <td>{competition.private == "0" ? "Public" : "Private"}</td>
                 <td>
                   <LinkContainer to={`/competitions/${competition.id}/edit`}>
                     <Button variant="light" className="btn-sm">
