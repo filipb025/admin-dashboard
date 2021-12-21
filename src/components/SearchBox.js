@@ -17,21 +17,16 @@ const SearchBox = ({ history, searchKeyword, term }) => {
     { value: { 0: "Public" }, label: "Public Competition" },
     { value: { 1: "Private" }, label: "Private Competition" },
   ];
-
-  useEffect(() => {
-    setType("");
-    setIsPrivate("");
-  }, [type, isPrivate]);
-
   const handleCompetitionType = (e) => {
     setType(e.value);
-    history.push(`/competitions/${e.value}/${isPrivate}`);
+    history.push(`/competitions/${e.value}`);
   };
-
   const handleIsPrivate = (e) => {
     setIsPrivate(e.value);
-    history.push(`/competitions/${Object.keys(e.value)}`);
+    history.push(`/competitions/${type}/${Object.keys(e.value)}`);
   };
+
+  useEffect(() => {}, [type, isPrivate, handleCompetitionType]);
 
   const getSearchTerm = () => {
     searchKeyword(inputEl.current.value);

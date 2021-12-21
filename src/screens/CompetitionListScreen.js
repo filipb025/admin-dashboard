@@ -209,7 +209,7 @@ const CompetitionListScreen = ({ history, match }) => {
               </Form>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={createCompetitionHandler}>
+              <Button variant="primary" onClick={createCompetitionHandler}>
                 Create
               </Button>
               <Button variant="secondary" onClick={handleCloseModal}>
@@ -265,6 +265,11 @@ const CompetitionListScreen = ({ history, match }) => {
                     <td>{competition.type}</td>
                     <td>{competition.private == "0" ? "Public" : "Private"}</td>
                     <td>
+                      <LinkContainer to={`/competitions/details`}>
+                        <Button variant="secondary" className="btn-sm">
+                          <i class="fas fa-info-circle"></i>
+                        </Button>
+                      </LinkContainer>
                       <LinkContainer
                         to={`/competitions/${competition.id}/edit`}
                       >

@@ -7,11 +7,13 @@ import DashboardScreen from "./screens/DashboardScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import CompetitionListScreen from "./screens/CompetitionListScreen";
 import CompetitionEditScreen from "./screens/CompetitionEditScreen";
+import CompetitionDetailsScreen from "./screens/CompetitionDetailsScreen";
 import UserListScreen from "./screens/UserListScreen";
 import UserEditScreen from "./screens/UserEditScreen";
 import TeamListScreen from "./screens/TeamListScreen";
 import TeamEditScreen from "./screens/TeamEditScreen";
 import ApplicationDrawer from "./components/ApplicationDrawer";
+
 function App(props) {
   const location = useLocation();
   return (
@@ -35,13 +37,19 @@ function App(props) {
             <Route
               path="/competitions/:id/edit"
               component={CompetitionEditScreen}
-              exact
             />
 
             <Route
-              path="/competitions/:type/:isPrivate?"
-              component={CompetitionListScreen}
+              path="/competitions/details"
+              component={CompetitionDetailsScreen}
+              exact
             />
+
+            {/* <Route
+              path="/competitions/:type?/:isPrivate"
+              component={CompetitionListScreen}
+              exact
+            /> */}
 
             <Route
               path="/competitions"

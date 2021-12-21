@@ -152,7 +152,7 @@ const TeamListScreen = () => {
                   Create
                 </Button>
               ) : (
-                <Button variant="secondary" onClick={createTeamHandler}>
+                <Button variant="primary" onClick={createTeamHandler}>
                   Create
                 </Button>
               )}
