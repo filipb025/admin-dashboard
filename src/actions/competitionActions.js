@@ -57,7 +57,7 @@ export const listCompetitions =
 
 export const listCompetitionDetails = (id) => async (dispatch, getState) => {
   try {
-    dispatch({ type: COMPETITION_DETAILS_REQUEST });
+    // dispatch({ type: COMPETITION_DETAILS_REQUEST });
 
     const {
       userLogin: { userInfo },

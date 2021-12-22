@@ -43,7 +43,7 @@ export const competitionDetailsReducer = (
 ) => {
   switch (action.type) {
     case COMPETITION_DETAILS_REQUEST:
-      return { loading: true, ...state };
+      return { ...state, loading: true };
     case COMPETITION_DETAILS_SUCCESS:
       return { loading: false, competition: action.payload };
     case COMPETITION_DETAILS_FAIL:

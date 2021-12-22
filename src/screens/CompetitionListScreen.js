@@ -17,8 +17,6 @@ import { COMPETITION_CREATE_RESET } from "../constants/competitionConstants";
 import SearchBox from "../components/SearchBox";
 
 const CompetitionListScreen = ({ history, match }) => {
-  const type = match.params.type;
-  const isPrivate = match.params.isPrivate;
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState();
   const [startDate, setStartDate] = useState("");
@@ -56,7 +54,7 @@ const CompetitionListScreen = ({ history, match }) => {
     competition: createdCompetition,
   } = competitionCreate;
 
-  const fetchData = () => {
+  const fetchData = (type, isPrivate) => {
     dispatch(listCompetitions(type, isPrivate));
   };
 
@@ -66,7 +64,7 @@ const CompetitionListScreen = ({ history, match }) => {
     if (!userInfo) {
       history.push("/");
     }
-    fetchData();
+    fetchData("", "");
     dispatch(listTeams());
   }, [
     dispatch,
@@ -75,8 +73,8 @@ const CompetitionListScreen = ({ history, match }) => {
     successCreate,
     createdCompetition,
     userInfo,
-    type,
-    isPrivate,
+    // type,
+    // isPrivate,
   ]);
 
   const deleteHandler = (id) => {
@@ -265,7 +263,9 @@ const CompetitionListScreen = ({ history, match }) => {
                     <td>{competition.type}</td>
                     <td>{competition.private == "0" ? "Public" : "Private"}</td>
                     <td>
-                      <LinkContainer to={`/competitions/details`}>
+                      <LinkContainer
+                        to={`/competitions/${competition.id}/details`}
+                      >
                         <Button variant="secondary" className="btn-sm">
                           <i class="fas fa-info-circle"></i>
                         </Button>

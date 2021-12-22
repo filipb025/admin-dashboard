@@ -40,7 +40,7 @@ function App(props) {
             />
 
             <Route
-              path="/competitions/details"
+              path="/competitions/:id/details"
               component={CompetitionDetailsScreen}
               exact
             />

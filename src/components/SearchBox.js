@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 import { Form, Button, Dropdown, DropdownButton } from "react-bootstrap";
+import { listCompetitions } from "../actions/competitionActions";
 import Select from "react-select";
 const SearchBox = ({ history, searchKeyword, term }) => {
+  const dispatch = useDispatch();
   const [type, setType] = useState("");
   const [isPrivate, setIsPrivate] = useState("");
   const inputEl = useRef("");
@@ -14,16 +17,16 @@ const SearchBox = ({ history, searchKeyword, term }) => {
 
   const competitionIsPrivate = [
     { value: "", label: "All Competitions" },
-    { value: { 0: "Public" }, label: "Public Competition" },
-    { value: { 1: "Private" }, label: "Private Competition" },
+    { value: "public", label: "Public Competition" },
+    { value: "private", label: "Private Competition" },
   ];
   const handleCompetitionType = (e) => {
     setType(e.value);
-    history.push(`/competitions/${e.value}`);
+    dispatch(listCompetitions(e.value, isPrivate));
   };
   const handleIsPrivate = (e) => {
     setIsPrivate(e.value);
-    history.push(`/competitions/${type}/${Object.keys(e.value)}`);
+    dispatch(listCompetitions(type, e.value));
   };
 
   useEffect(() => {}, [type, isPrivate, handleCompetitionType]);
