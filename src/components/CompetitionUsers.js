@@ -2,7 +2,7 @@ import React from "react";
 import {Table} from "react-bootstrap";
 import Message from "./Message";
 import Loader from './Loader';
-import {useDispatch, useSelector} from "react-redux";
+
 
 const CompetitionUsers = ({firstName, lastName, competitions}) => {
     const details = competitions.competition.users

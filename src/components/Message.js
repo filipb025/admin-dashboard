@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Alert, Button} from "react-bootstrap";
+import {Alert} from "react-bootstrap";
 
 const Message = ({variant, children}) => {
     const [visibleAlert, setVisibleAlert] = useState(false);

@@ -18,7 +18,6 @@ function App(props) {
     const location = useLocation();
     return (
         <>
-            {/* {location.pathname !== "/" && <Header />} */}
             <Route
                 render={({location}) =>
                     location.pathname !== "/" ? <Header/> : null
@@ -44,22 +43,15 @@ function App(props) {
                             component={CompetitionDetailsScreen}
                             exact
                         />
-
-                        {/* <Route
-              path="/competitions/:type?/:isPrivate"
-              component={CompetitionListScreen}
-              exact
-            /> */}
-
                         <Route
                             path="/competitions"
                             component={CompetitionListScreen}
                             exact
                         />
                         <Route path="/dashboard" component={DashboardScreen}/>
-                        <Route path="/users/:id/edit" component={UserEditScreen}/>
+                        <Route path="/users/:id/edit" component={UserEditScreen} exact/>
                         <Route path="/users" component={UserListScreen} exact/>
-                        <Route path="/profile" component={ProfileScreen} exact/>
+
                     </Col>
                 </Row>
             </main>

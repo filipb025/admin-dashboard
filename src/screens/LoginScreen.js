@@ -22,7 +22,6 @@ const LoginScreen = ({ history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // DISPATCH LOGIN
     dispatch(login(email, password));
   };
 

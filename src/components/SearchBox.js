@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { Form, Button, Dropdown, DropdownButton } from "react-bootstrap";
+import { Form, Button} from "react-bootstrap";
 import { listCompetitions } from "../actions/competitionActions";
 import Select from "react-select";
 const SearchBox = ({ history, searchKeyword, term }) => {
@@ -11,14 +11,14 @@ const SearchBox = ({ history, searchKeyword, term }) => {
 
   const competitionType = [
     { value: "", label: "All Competitions" },
-    { value: "team", label: "Team Competition" },
-    { value: "user", label: "User Competition" },
+    { value: "1", label: "Team Competition" },
+    { value: "0", label: "User Competition" },
   ];
 
   const competitionIsPrivate = [
     { value: "", label: "All Competitions" },
-    { value: "public", label: "Public Competition" },
-    { value: "private", label: "Private Competition" },
+    { value: "0", label: "Public Competition" },
+    { value: "1", label: "Private Competition" },
   ];
   const handleCompetitionType = (e) => {
     setType(e.value);

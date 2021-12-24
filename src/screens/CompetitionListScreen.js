@@ -23,7 +23,6 @@ const CompetitionListScreen = ({history, match}) => {
     const [endDate, setEndDate] = useState("");
     const [checkCompetition, setCheckCompetition] = useState(false);
     const [selectedTeams, setSelectedTeams] = useState([]);
-    const [field, setField] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const dispatch = useDispatch();
@@ -73,8 +72,7 @@ const CompetitionListScreen = ({history, match}) => {
         successCreate,
         createdCompetition,
         userInfo,
-        // type,
-        // isPrivate,
+
     ]);
 
     const deleteHandler = (id) => {
@@ -119,9 +117,9 @@ const CompetitionListScreen = ({history, match}) => {
     };
     return (
         <>
-            <Row className="align-items-center">
+            <Row className="align-items-center" sm={12} md={12} lg={12} xl={12}>
                 <h1>Competitions</h1>
-                <Col className="text-right d-inline-flex ">
+                <Col className="text-right d-inline-flex " sm={12} md={12} lg={12} xl={12}>
                     <Button className="my-3" onClick={handleShowModal}>
                         <i className="fas fa-plus"></i> Create Competition
                     </Button>
@@ -149,6 +147,7 @@ const CompetitionListScreen = ({history, match}) => {
                         <Modal.Header closeButton>
                             <Modal.Title>Create Competition</Modal.Title>
                         </Modal.Header>
+                        {successCreate && <Message variant='success'>{successCreate}</Message>}
                         {loadingCreate && <Loader/>}
                         {errorCreate && <Message variant="danger">{errorCreate}</Message>}
                         <Modal.Body>
@@ -260,7 +259,7 @@ const CompetitionListScreen = ({history, match}) => {
                                 <td>{competition.updated_at}</td>
                                 <td>{competition.user}</td>
                                 <td>{competition.teams.name}</td>
-                                <td>{competition.type}</td>
+                                <td>{competition.type === '0' ? 'User' : 'Team'}</td>
                                 <td>{competition.private == "0" ? "Public" : "Private"}</td>
                                 <td>
                                     <LinkContainer

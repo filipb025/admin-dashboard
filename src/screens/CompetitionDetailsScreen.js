@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from "react";
-import {useDispatch, useSelector, batch} from "react-redux";
-import {Container, Row, Col, Form, Button, Card} from "react-bootstrap";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {Container, Row, Col, Card} from "react-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import {Link} from "react-router-dom";
@@ -13,7 +13,6 @@ const CompetitionDetailsScreen = ({match}) => {
 
     const competitionDetails = useSelector((state) => state.competitionDetails);
     const {loading, error, competition} = competitionDetails;
-    // console.log(competitionDetails)
     console.log(competition)
     useEffect(async () => {
         await dispatch(listCompetitionDetails(competitionId));
@@ -55,13 +54,17 @@ const CompetitionDetailsScreen = ({match}) => {
             <Col>
                 <Container className="my-4">
                     <h3>Competition Users</h3>
-
-                    {Object.keys(competition) >= 0 ? <Loader/> : error ? <Message variant='danger'>{error}</Message> :
-                        (<CompetitionUsers competitions={competitionDetails}
-                                           firstName={competition.users.map(item => item.first_name)}
-                                           lastName={competition.users.map(item => item.last_name)}
-                        />)
-                    }
+                    {Object.keys(competition) >= 0 ? <Loader/> : error ?
+                        <Message variant='danger'>{error}</Message> : competition.type == '0' ? (
+                            <CompetitionUsers competitions={competitionDetails}
+                                              firstName={competition.users.map(item => item.first_name)}
+                                              lastName={competition.users.map(item => item.last_name)}
+                            />) : <Col>
+                            <CompetitionUsers competitions={competitionDetails}
+                                              firstName={competition.users.map(item => item.first_name)}
+                                              lastName={competition.users.map(item => item.last_name)}
+                            />
+                        </Col>}
                 </Container>
             </Col>
         </Row>
